@@ -56,10 +56,10 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Grid.Row="0" Text="Nombre" Margin="0,0,0,6" FontWeight="Medium"/>
-                        <ui:TextBox Grid.Row="1" PlaceholderText="Ingrese el nombre..." Margin="0,0,0,15" HorizontalAlignment="Stretch"/>
+                        <ui:TextBox x:Name="TxtNombre" Grid.Row="1" PlaceholderText="Ingrese el nombre..." Margin="0,0,0,15" HorizontalAlignment="Stretch"/>
 
                         <TextBlock Grid.Row="2" Text="Correo Electrónico" Margin="0,0,0,6" FontWeight="Medium"/>
-                        <ui:TextBox Grid.Row="3" PlaceholderText="ejemplo@correo.com" Margin="0,0,0,0" HorizontalAlignment="Stretch"/>
+                        <ui:TextBox x:Name="TxtEmail" Grid.Row="3" PlaceholderText="ejemplo@correo.com" Margin="0,0,0,0" HorizontalAlignment="Stretch"/>
                     </Grid>
 
                     <!-- COLUMNA DERECHA -->
@@ -72,7 +72,7 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Grid.Row="0" Text="Apellidos" Margin="0,0,0,6" FontWeight="Medium"/>
-                        <ui:TextBox Grid.Row="1" PlaceholderText="Ingrese los apellidos..." Margin="0,0,0,15" HorizontalAlignment="Stretch"/>
+                        <ui:TextBox x:Name="TxtApellidos" Grid.Row="1" PlaceholderText="Ingrese los apellidos..." Margin="0,0,0,15" HorizontalAlignment="Stretch"/>
 
                         <TextBlock Grid.Row="2" Text="Teléfono" Margin="0,0,0,6" FontWeight="Medium"/>
                         <ui:TextBox x:Name="TxtTelefono" Grid.Row="3" PlaceholderText="Ej. 6120000000" Margin="0,0,0,0" HorizontalAlignment="Stretch"
@@ -84,7 +84,7 @@
                 <!-- 2. CAMPO EXTRA INFERIOR (Rol a lo ancho) -->
                 <StackPanel Grid.Row="1" Margin="0,15,0,0">
                     <TextBlock Text="Rol de Usuario" Margin="0,0,0,6" FontWeight="Medium"/>
-                    <ComboBox SelectedIndex="0" HorizontalAlignment="Stretch">
+                    <ComboBox x:Name="CmbRol" SelectedIndex="0" HorizontalAlignment="Stretch">
                         <ComboBoxItem IsEnabled="False" Content="-- Seleccione un Rol --"/>
                         <ComboBoxItem Content="Administrador"/>
                         <ComboBoxItem Content="Vendedor"/>
@@ -103,13 +103,13 @@
                     <!-- Columna Izquierda: Contraseña -->
                     <StackPanel Grid.Column="0">
                         <TextBlock Text="Contraseña" Margin="0,0,0,6" FontWeight="Medium"/>
-                        <ui:PasswordBox PlaceholderText="••••••••" HorizontalAlignment="Stretch"/>
+                        <ui:PasswordBox x:Name="TxtPassword" PlaceholderText="••••••••" HorizontalAlignment="Stretch"/>
                     </StackPanel>
 
                     <!-- Columna Derecha: Confirmar Contraseña -->
                     <StackPanel Grid.Column="2">
                         <TextBlock Text="Confirmar Contraseña" Margin="0,0,0,6" FontWeight="Medium"/>
-                        <ui:PasswordBox PlaceholderText="••••••••" HorizontalAlignment="Stretch"/>
+                        <ui:PasswordBox x:Name="TxtPasswordConfirm" PlaceholderText="••••••••" HorizontalAlignment="Stretch"/>
                     </StackPanel>
                 </Grid>
             </Grid>
@@ -117,8 +117,8 @@
 
         <!-- 4. BOTONES DE ACCIÓN ABAJO A LA DERECHA (Fuera de la tarjeta) -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-            <ui:Button Content="Cancelar" Appearance="Secondary" Width="120" Margin="0,0,10,0"/>
-            <ui:Button Content="Guardar Usuario" Appearance="Primary" Width="150"/>
+            <ui:Button Content="Cancelar" Appearance="Secondary" Width="120" Margin="0,0,10,0" Click="BtnCancelar_Click"/>
+            <ui:Button Content="Guardar Usuario" Appearance="Primary" Width="150" Click="BtnGuardar_Click"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -19,8 +19,8 @@
 
             <StackPanel>
                 <!-- Título -->
-                <TextBlock Text="Bem-vindo" FontSize="24" FontWeight="Bold" Margin="0,0,0,4"/>
-                <TextBlock Text="Inicie sessão para continuar" Opacity="0.6" FontSize="13" Margin="0,0,0,20"/>
+                <TextBlock Text="Bienvenido" FontSize="24" FontWeight="Bold" Margin="0,0,0,4"/>
+                <TextBlock Text="Inicie sesión para continuar" Opacity="0.6" FontSize="13" Margin="0,0,0,20"/>
 
                 <!-- Campo E-mail -->
                 <TextBlock Text="Correo Electrónico" Margin="0,0,0,6" FontWeight="Medium" FontSize="12"/>
