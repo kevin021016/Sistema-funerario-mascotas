@@ -17,6 +17,7 @@ using ClosedXML.Excel;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using Sistema_funerario_mascotas.Views.Users;
 
 namespace Sistema_funerario_mascotas
 {
@@ -134,6 +135,13 @@ namespace Sistema_funerario_mascotas
         private IContainer CellStyle(IContainer container)
         {
             return container.Padding(5).BorderBottom(1).BorderColor(QuestPDF.Helpers.Colors.Grey.Lighten4);
+        }
+
+        private void IrAgregarUsuario_Click(object sender, RoutedEventArgs e)
+        {
+            // Asumiendo que tu página de registro se llama "AgregarUsuarioPage"
+            // Esto busca el contenedor principal y navega hacia la nueva página
+            this.NavigationService.Navigate(new CrearUsuarioPage());
         }
 
         private class User

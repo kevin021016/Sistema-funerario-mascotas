@@ -42,7 +42,7 @@
             <ui:TextBox Grid.Column="0" PlaceholderText="Buscar por nombre..." Icon="{ui:SymbolIcon Search24}"/>
 
             <!-- Botón Agregar Usuario -->
-            <ui:Button Grid.Column="2" Content="+ Agregar usuario" Appearance="Primary"/>
+            <ui:Button Grid.Column="2" Content="+ Agregar usuario" Foreground="White" FontWeight="Medium" Cursor="Hand" Appearance="Primary" Click="IrAgregarUsuario_Click"/>
         </Grid>
 
         <!-- Contenedor de la Tabla -->
