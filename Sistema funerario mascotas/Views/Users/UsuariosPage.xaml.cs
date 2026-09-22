@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sistema_funerario_mascotas.Views.Users;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
@@ -21,6 +22,7 @@ namespace Sistema_funerario_mascotas
             {
                 var client = new HttpClient();
                 var request = new HttpRequestMessage(HttpMethod.Get, "http://127.0.0.1:8000/api/users");
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", SessionManager.AuthToken);
                 var response = await client.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
@@ -43,7 +45,7 @@ namespace Sistema_funerario_mascotas
 
         private void IrAgregarUsuario_Click(object sender, RoutedEventArgs e)
         {
-            // Lógica para navegar a la vista de crear usuario
+            this.NavigationService.Navigate(new CrearUsuarioPage());
         }
 
         private void ExportPdf_Click(object sender, RoutedEventArgs e) { }

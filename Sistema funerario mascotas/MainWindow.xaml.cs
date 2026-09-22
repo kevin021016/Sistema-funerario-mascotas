@@ -19,6 +19,13 @@ namespace Sistema_funerario_mascotas
         public MainWindow()
         {
             InitializeComponent();
+            this.Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Carga automáticamente el DashboardPage al iniciar
+            RootNavigation.Navigate(typeof(DashboardPage));
         }
     }
 }
