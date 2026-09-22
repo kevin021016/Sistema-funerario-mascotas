@@ -46,6 +46,7 @@
         </Grid>
 
         <!-- Contenedor de la Tabla -->
+        <!-- Contenedor de la Tabla -->
         <Border Grid.Row="3" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="15">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
@@ -67,96 +68,55 @@
 
                     <!-- Separador sutil -->
                     <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,0,0,10"/>
-                    <!-- FILA 1 DE PRUEBA -->
-                    <Grid Margin="0,10,0,10" VerticalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="1.5*"/>
-                            <ColumnDefinition Width="1.5*"/>
-                            <ColumnDefinition Width="150"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                            <TextBlock Text="Kevin" FontWeight="SemiBold"/>
-                            <TextBlock Text="aada" Foreground="#3B82F6" FontSize="12"/>
-                        </StackPanel>
-                        <TextBlock Grid.Column="1" Text="Aviles" VerticalAlignment="Center" Opacity="0.9"/>
-                        <TextBlock Grid.Column="2" Text="kevinmaniacao117@hotmail.com" VerticalAlignment="Center" Opacity="0.9"/>
-                        <TextBlock Grid.Column="3" Text="N/A" VerticalAlignment="Center" Opacity="0.7"/>
-                        <StackPanel Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#0EA5E9" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Ver">
-                                <ui:SymbolIcon Symbol="Eye24" FontSize="14"/>
-                            </Button>
-                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#EAB308" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Editar">
-                                <ui:SymbolIcon Symbol="Edit24" FontSize="14"/>
-                            </Button>
-                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#EF4444" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Eliminar">
-                                <ui:SymbolIcon Symbol="Delete24" FontSize="14"/>
-                            </Button>
-                        </StackPanel>
-                    </Grid>
 
-                    <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,5"/>
+                    <!-- LISTA DINÁMICA DE USUARIOS -->
+                    <ItemsControl x:Name="IcUsuarios">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Grid Margin="0,10,0,10" VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="1.5*"/>
+                                            <ColumnDefinition Width="1.5*"/>
+                                            <ColumnDefinition Width="150"/>
+                                        </Grid.ColumnDefinitions>
 
-                    <!-- FILA 2 DE PRUEBA -->
-                    <Grid Margin="0,10,0,10" VerticalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="1.5*"/>
-                            <ColumnDefinition Width="1.5*"/>
-                            <ColumnDefinition Width="150"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                            <TextBlock Text="Hugo" FontWeight="SemiBold"/>
-                            <TextBlock Text="Vendedor" Foreground="#3B82F6" FontSize="12"/>
-                        </StackPanel>
-                        <TextBlock Grid.Column="1" Text="Sánchez" VerticalAlignment="Center" Opacity="0.9"/>
-                        <TextBlock Grid.Column="2" Text="h.sanchez@test.com" VerticalAlignment="Center" Opacity="0.9"/>
-                        <TextBlock Grid.Column="3" Text="2026-05-24 00:53:10" VerticalAlignment="Center" Opacity="0.7"/>
-                        <StackPanel Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#0EA5E9" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Ver">
-                                <ui:SymbolIcon Symbol="Eye24" FontSize="14"/>
-                            </Button>
-                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#EAB308" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Editar">
-                                <ui:SymbolIcon Symbol="Edit24" FontSize="14"/>
-                            </Button>
-                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#EF4444" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Eliminar">
-                                <ui:SymbolIcon Symbol="Delete24" FontSize="14"/>
-                            </Button>
-                        </StackPanel>
-                    </Grid>
+                                        <!-- Nombre y Rol -->
+                                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding name}" FontWeight="SemiBold"/>
+                                            <TextBlock Text="{Binding rol}" Foreground="#3B82F6" FontSize="12"/>
+                                        </StackPanel>
 
-                    <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,5"/>
+                                        <!-- Apellidos -->
+                                        <TextBlock Grid.Column="1" Text="{Binding apellidos}" VerticalAlignment="Center" Opacity="0.9"/>
 
-                    <!-- FILA 3 DE PRUEBA -->
-                    <Grid Margin="0,10,0,10" VerticalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="1.5*"/>
-                            <ColumnDefinition Width="1.5*"/>
-                            <ColumnDefinition Width="150"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                            <TextBlock Text="Marcos" FontWeight="SemiBold"/>
-                            <TextBlock Text="Administrador" Foreground="#3B82F6" FontSize="12"/>
-                        </StackPanel>
-                        <TextBlock Grid.Column="1" Text="Peralta" VerticalAlignment="Center" Opacity="0.9"/>
-                        <TextBlock Grid.Column="2" Text="m.peralta@test.com" VerticalAlignment="Center" Opacity="0.9"/>
-                        <TextBlock Grid.Column="3" Text="2026-05-11 20:08:30" VerticalAlignment="Center" Opacity="0.7"/>
-                        <StackPanel Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#0EA5E9" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Ver">
-                                <ui:SymbolIcon Symbol="Eye24" FontSize="14"/>
-                            </Button>
-                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#EAB308" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Editar">
-                                <ui:SymbolIcon Symbol="Edit24" FontSize="14"/>
-                            </Button>
-                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#EF4444" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Eliminar">
-                                <ui:SymbolIcon Symbol="Delete24" FontSize="14"/>
-                            </Button>
-                        </StackPanel>
-                    </Grid>
+                                        <!-- Email -->
+                                        <TextBlock Grid.Column="2" Text="{Binding email}" VerticalAlignment="Center" Opacity="0.9"/>
+
+                                        <!-- Última vez activo -->
+                                        <TextBlock Grid.Column="3" Text="{Binding last_active_at, TargetNullValue='N/A'}" VerticalAlignment="Center" Opacity="0.7"/>
+
+                                        <!-- Botones de Acción -->
+                                        <StackPanel Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#0EA5E9" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Ver">
+                                                <ui:SymbolIcon Symbol="Eye24" FontSize="14"/>
+                                            </Button>
+                                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#EAB308" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Editar">
+                                                <ui:SymbolIcon Symbol="Edit24" FontSize="14"/>
+                                            </Button>
+                                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#EF4444" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Eliminar">
+                                                <ui:SymbolIcon Symbol="Delete24" FontSize="14"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,5"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
                 </StackPanel>
             </ScrollViewer>
         </Border>
