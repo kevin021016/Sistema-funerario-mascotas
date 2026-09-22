@@ -1,0 +1,54 @@
+﻿<Page x:Class="Sistema_funerario_mascotas.DashboardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Sistema_funerario_mascotas"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d" 
+      Title="DashboardPage"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Título de la sección -->
+        <TextBlock Text="Panel General" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <!-- Contenedor de Tarjetas de Estadísticas -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Tarjeta 1: Contratos Activos -->
+            <ui:Card Grid.Column="0" Margin="0,0,12,0" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="Contratos Activos" FontSize="14" Opacity="0.7"/>
+                    <TextBlock Text="24" FontSize="32" FontWeight="Bold" Margin="0,10,0,0"/>
+                </StackPanel>
+            </ui:Card>
+
+            <!-- Tarjeta 2: Servicios en Curso -->
+            <ui:Card Grid.Column="1" Margin="6,0,6,0" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="Servicios en Curso" FontSize="14" Opacity="0.7"/>
+                    <TextBlock Text="3" FontSize="32" FontWeight="Bold" Margin="0,10,0,0"/>
+                </StackPanel>
+            </ui:Card>
+
+            <!-- Tarjeta 3: Inventario Disponible -->
+            <ui:Card Grid.Column="2" Margin="12,0,0,0" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="Ataúdes / Urnas Stock" FontSize="14" Opacity="0.7"/>
+                    <TextBlock Text="48" FontSize="32" FontWeight="Bold" Margin="0,10,0,0"/>
+                </StackPanel>
+            </ui:Card>
+        </Grid>
+    </Grid>
+</Page>
