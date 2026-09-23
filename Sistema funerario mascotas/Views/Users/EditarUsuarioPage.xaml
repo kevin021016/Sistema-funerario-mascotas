@@ -1,0 +1,125 @@
+<Page x:Class="Sistema_funerario_mascotas.Views.Users.EditarUsuarioPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Sistema_funerario_mascotas"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="EditarUsuarioPage"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Migas de pan (Breadcrumb) -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock Text="Home" Opacity="0.5" FontSize="12"/>
+            <TextBlock Text=" > " Opacity="0.5" FontSize="12" Margin="5,0"/>
+            <TextBlock Text="Dashboard" Opacity="0.5" FontSize="12"/>
+            <TextBlock Text=" > " Opacity="0.5" FontSize="12" Margin="5,0"/>
+            <TextBlock Text="Editar usuario" FontSize="12" FontWeight="SemiBold"/>
+        </StackPanel>
+
+        <TextBlock Grid.Row="1" Text="Editar usuario" FontSize="26" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <!-- Formulario similar a CrearUsuarioPage -->
+        <Border Grid.Row="2" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="25" VerticalAlignment="Top">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+					<StackPanel Grid.Column="0">
+						<!-- Nombre -->
+						<StackPanel Margin="0,0,0,20">
+							<TextBlock Text="Nombre" Margin="0,0,0,6" FontWeight="Medium"/>
+							<ui:TextBox x:Name="TxtNombre" PlaceholderText="Ingrese el nombre..." HorizontalAlignment="Stretch"/>
+							<TextBlock x:Name="TxtErrorNombre" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+						</StackPanel>
+
+						<!-- Correo Electrónico -->
+						<StackPanel>
+							<TextBlock Text="Correo Electrónico" Margin="0,0,0,6" FontWeight="Medium"/>
+							<ui:TextBox x:Name="TxtEmail" PlaceholderText="ejemplo@correo.com" HorizontalAlignment="Stretch"/>
+							<TextBlock x:Name="TxtErrorEmail" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+						</StackPanel>
+					</StackPanel>
+
+					<!-- COLUMNA DERECHA -->
+					<StackPanel Grid.Column="2">
+						<!-- Apellidos -->
+						<StackPanel Margin="0,0,0,20">
+							<TextBlock Text="Apellidos" Margin="0,0,0,6" FontWeight="Medium"/>
+							<ui:TextBox x:Name="TxtApellidos" PlaceholderText="Ingrese los apellidos..." HorizontalAlignment="Stretch"/>
+							<TextBlock x:Name="TxtErrorApellidos" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+						</StackPanel>
+
+						<!-- Teléfono -->
+						<StackPanel>
+							<TextBlock Text="Teléfono" Margin="0,0,0,6" FontWeight="Medium"/>
+							<ui:TextBox x:Name="TxtTelefono" PlaceholderText="Ej. 6120000000" HorizontalAlignment="Stretch"
+                            PreviewTextInput="Numero_PreviewTextInput"
+                            DataObject.Pasting="Texto_Pasting"/>
+							<TextBlock x:Name="TxtErrorTelefono" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+						</StackPanel>
+					</StackPanel>
+                </Grid>
+
+                <StackPanel Grid.Row="1" Margin="0,15,0,0">
+                    <TextBlock Text="Rol de Usuario" Margin="0,0,0,6" FontWeight="Medium"/>
+                    <ComboBox x:Name="CmbRol" SelectedIndex="0" HorizontalAlignment="Stretch">
+                        <ComboBoxItem IsEnabled="False" Content="-- Seleccione un Rol --"/>
+                        <ComboBoxItem Content="Administrador"/>
+                        <ComboBoxItem Content="Vendedor"/>
+                        <ComboBoxItem Content="Asesor"/>
+                    </ComboBox>
+                    <TextBlock x:Name="TxtErrorRol" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+                </StackPanel>
+
+                <Grid Grid.Row="2" Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Contraseña (dejar vacío para no cambiar)" Margin="0,0,0,6" FontWeight="Medium"/>
+                        <ui:PasswordBox x:Name="TxtPassword" PlaceholderText="••••••••" HorizontalAlignment="Stretch"/>
+                        <TextBlock x:Name="TxtErrorPassword" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Confirmar Contraseña" Margin="0,0,0,6" FontWeight="Medium"/>
+                        <ui:PasswordBox x:Name="TxtPasswordConfirm" PlaceholderText="••••••••" HorizontalAlignment="Stretch"/>
+                        <TextBlock x:Name="TxtErrorPasswordConfirm" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- botones dentro del formulario movidos fuera para mantener el mismo layout que CrearUsuarioPage -->
+            </Grid>
+        </Border>
+
+        <!-- 4. BOTONES DE ACCIÓN ABAJO A LA DERECHA (Fuera de la tarjeta) -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <ui:Button Content="Cancelar" Appearance="Secondary" Width="120" Margin="0,0,10,0" Click="BtnCancelar_Click"/>
+            <ui:Button Content="Guardar cambios" Appearance="Primary" Width="150" Click="BtnGuardar_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>

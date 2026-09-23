@@ -92,6 +92,15 @@ namespace Sistema_funerario_mascotas
             this.NavigationService.Navigate(new CrearUsuarioPage());
         }
 
+        private void IrEditarUsuario_Click(object sender, RoutedEventArgs e)
+        {
+            // El DataContext del botón está ligado al usuario correspondiente en el ItemsControl
+            if (sender is Button btn && btn.DataContext is UsuarioModel usuario)
+            {
+                this.NavigationService.Navigate(new Views.Users.EditarUsuarioPage(usuario));
+            }
+        }
+
         private void ExportPdf_Click(object sender, RoutedEventArgs e) { }
         private void ExportExcel_Click(object sender, RoutedEventArgs e) { }
     }

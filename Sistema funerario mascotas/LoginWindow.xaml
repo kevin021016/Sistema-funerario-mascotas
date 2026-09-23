@@ -24,11 +24,11 @@
 
                 <!-- Campo E-mail -->
                 <TextBlock Text="Correo Electrónico" Margin="0,0,0,6" FontWeight="Medium" FontSize="12"/>
-                <ui:TextBox x:Name="TxtEmail" PlaceholderText="ejemplo@correo.com" Margin="0,0,0,12" HorizontalAlignment="Stretch"/>
+                <ui:TextBox x:Name="TxtEmail" Text="correo@gmail.com"  PlaceholderText="ejemplo@correo.com" Margin="0,0,0,12" HorizontalAlignment="Stretch"/>
 
                 <!-- Campo Contraseña -->
                 <TextBlock Text="Contraseña" Margin="0,0,0,6" FontWeight="Medium" FontSize="12"/>
-                <ui:PasswordBox x:Name="TxtPassword" PlaceholderText="••••••••" Margin="0,0,0,20" HorizontalAlignment="Stretch"/>
+                <ui:PasswordBox x:Name="TxtPassword" Text="password123" PlaceholderText="••••••••" Margin="0,0,0,20" HorizontalAlignment="Stretch"/>
 
                 <!-- Botón Login -->
                 <ui:Button Content="Iniciar Sesión" Appearance="Primary" HorizontalAlignment="Stretch" Height="38" Click="BtnLogin_Click"/>

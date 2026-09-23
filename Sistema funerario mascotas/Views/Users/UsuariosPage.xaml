@@ -103,12 +103,11 @@
                                             <Button Width="32" Height="32" Margin="3" Padding="0" Background="#0EA5E9" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Ver">
                                                 <ui:SymbolIcon Symbol="Eye24" FontSize="14"/>
                                             </Button>
-                                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#EAB308" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Editar">
+                                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#EAB308" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Editar" Click="IrEditarUsuario_Click">
                                                 <ui:SymbolIcon Symbol="Edit24" FontSize="14"/>
                                             </Button>
                                             <Button Width="32" Height="32" Margin="3" Padding="0" Background="#EF4444" BorderBrush="{x:Null}" 
-                                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Eliminar"
-                                                Click="BtnEliminar_Click" CommandParameter="{Binding id}">
+                                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Eliminar" Click="BtnEliminar_Click" CommandParameter="{Binding id}">
                                                 <ui:SymbolIcon Symbol="Delete24" FontSize="14"/>
                                             </Button>
                                         </StackPanel>

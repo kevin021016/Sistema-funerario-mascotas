@@ -42,13 +42,13 @@ namespace Sistema_funerario_mascotas.Views.Users
         // Oculta y limpia todos los textos de error previos
         private void LimpiarErroresUI()
         {
-            TxtErrorNombre.Visibility = Visibility.Collapsed;
-            TxtErrorApellidos.Visibility = Visibility.Collapsed;
-            TxtErrorEmail.Visibility = Visibility.Collapsed;
-            TxtErrorTelefono.Visibility = Visibility.Collapsed;
-            TxtErrorRol.Visibility = Visibility.Collapsed;
-            TxtErrorPassword.Visibility = Visibility.Collapsed;
-            TxtErrorPasswordConfirm.Visibility = Visibility.Collapsed;
+            TxtErrorNombre.Visibility = Visibility.Hidden;
+            TxtErrorApellidos.Visibility = Visibility.Hidden;
+            TxtErrorEmail.Visibility = Visibility.Hidden;
+            TxtErrorTelefono.Visibility = Visibility.Hidden;
+            TxtErrorRol.Visibility = Visibility.Hidden;
+            TxtErrorPassword.Visibility = Visibility.Hidden;
+            TxtErrorPasswordConfirm.Visibility = Visibility.Hidden;
         }
 
         // Expresión regular sencilla para validar el formato del correo electrónico

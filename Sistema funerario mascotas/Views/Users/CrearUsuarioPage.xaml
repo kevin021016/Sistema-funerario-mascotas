@@ -49,29 +49,37 @@
                     <!-- COLUMNA IZQUIERDA -->
                     <StackPanel Grid.Column="0">
                         <!-- Nombre -->
-                        <TextBlock Text="Nombre" Margin="0,0,0,6" FontWeight="Medium"/>
-                        <ui:TextBox x:Name="TxtNombre" PlaceholderText="Ingrese el nombre..." HorizontalAlignment="Stretch"/>
-                        <TextBlock x:Name="TxtErrorNombre" Foreground="#FF5555" FontSize="11" Margin="0,4,0,15" Visibility="Collapsed" TextWrapping="Wrap"/>
+                        <StackPanel Margin="0,0,0,20">
+                            <TextBlock Text="Nombre" Margin="0,0,0,6" FontWeight="Medium"/>
+                            <ui:TextBox x:Name="TxtNombre" PlaceholderText="Ingrese el nombre..." HorizontalAlignment="Stretch"/>
+                            <TextBlock x:Name="TxtErrorNombre" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+                        </StackPanel>
 
                         <!-- Correo Electrónico -->
-                        <TextBlock Text="Correo Electrónico" Margin="0,0,0,6" FontWeight="Medium"/>
-                        <ui:TextBox x:Name="TxtEmail" PlaceholderText="ejemplo@correo.com" HorizontalAlignment="Stretch"/>
-                        <TextBlock x:Name="TxtErrorEmail" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Collapsed" TextWrapping="Wrap"/>
+                        <StackPanel>
+                            <TextBlock Text="Correo Electrónico" Margin="0,0,0,6" FontWeight="Medium"/>
+                            <ui:TextBox x:Name="TxtEmail" PlaceholderText="ejemplo@correo.com" HorizontalAlignment="Stretch"/>
+                            <TextBlock x:Name="TxtErrorEmail" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+                        </StackPanel>
                     </StackPanel>
 
                     <!-- COLUMNA DERECHA -->
                     <StackPanel Grid.Column="2">
                         <!-- Apellidos -->
-                        <TextBlock Text="Apellidos" Margin="0,0,0,6" FontWeight="Medium"/>
-                        <ui:TextBox x:Name="TxtApellidos" PlaceholderText="Ingrese los apellidos..." HorizontalAlignment="Stretch"/>
-                        <TextBlock x:Name="TxtErrorApellidos" Foreground="#FF5555" FontSize="11" Margin="0,4,0,15" Visibility="Collapsed" TextWrapping="Wrap"/>
+                        <StackPanel Margin="0,0,0,20">
+                            <TextBlock Text="Apellidos" Margin="0,0,0,6" FontWeight="Medium"/>
+                            <ui:TextBox x:Name="TxtApellidos" PlaceholderText="Ingrese los apellidos..." HorizontalAlignment="Stretch"/>
+                            <TextBlock x:Name="TxtErrorApellidos" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+                        </StackPanel>
 
                         <!-- Teléfono -->
-                        <TextBlock Text="Teléfono" Margin="0,0,0,6" FontWeight="Medium"/>
-                        <ui:TextBox x:Name="TxtTelefono" PlaceholderText="Ej. 6120000000" HorizontalAlignment="Stretch"
+                        <StackPanel>
+                            <TextBlock Text="Teléfono" Margin="0,0,0,6" FontWeight="Medium"/>
+                            <ui:TextBox x:Name="TxtTelefono" PlaceholderText="Ej. 6120000000" HorizontalAlignment="Stretch"
                             PreviewTextInput="Numero_PreviewTextInput" 
                             DataObject.Pasting="Texto_Pasting"/>
-                        <TextBlock x:Name="TxtErrorTelefono" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Collapsed" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="TxtErrorTelefono" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
 
@@ -84,7 +92,7 @@
                         <ComboBoxItem Content="Vendedor"/>
                         <ComboBoxItem Content="Asesor"/>
                     </ComboBox>
-                    <TextBlock x:Name="TxtErrorRol" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Collapsed" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="TxtErrorRol" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
                 </StackPanel>
 
                 <!-- 3. CONTRASEÑA Y CONFIRMAR (En dos mitades simétricas) -->
@@ -99,14 +107,14 @@
                     <StackPanel Grid.Column="0">
                         <TextBlock Text="Contraseña" Margin="0,0,0,6" FontWeight="Medium"/>
                         <ui:PasswordBox x:Name="TxtPassword" PlaceholderText="••••••••" HorizontalAlignment="Stretch"/>
-                        <TextBlock x:Name="TxtErrorPassword" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Collapsed" TextWrapping="Wrap"/>
+                        <TextBlock x:Name="TxtErrorPassword" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
                     </StackPanel>
 
                     <!-- Columna Derecha: Confirmar Contraseña -->
                     <StackPanel Grid.Column="2">
                         <TextBlock Text="Confirmar Contraseña" Margin="0,0,0,6" FontWeight="Medium"/>
                         <ui:PasswordBox x:Name="TxtPasswordConfirm" PlaceholderText="••••••••" HorizontalAlignment="Stretch"/>
-                        <TextBlock x:Name="TxtErrorPasswordConfirm" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Collapsed" TextWrapping="Wrap"/>
+                        <TextBlock x:Name="TxtErrorPasswordConfirm" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
                     </StackPanel>
                 </Grid>
             </Grid>
