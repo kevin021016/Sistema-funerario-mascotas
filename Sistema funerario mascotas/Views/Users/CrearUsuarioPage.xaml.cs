@@ -39,30 +39,97 @@ namespace Sistema_funerario_mascotas.Views.Users
             }
         }
 
+        // Oculta y limpia todos los textos de error previos
+        private void LimpiarErroresUI()
+        {
+            TxtErrorNombre.Visibility = Visibility.Collapsed;
+            TxtErrorApellidos.Visibility = Visibility.Collapsed;
+            TxtErrorEmail.Visibility = Visibility.Collapsed;
+            TxtErrorTelefono.Visibility = Visibility.Collapsed;
+            TxtErrorRol.Visibility = Visibility.Collapsed;
+            TxtErrorPassword.Visibility = Visibility.Collapsed;
+            TxtErrorPasswordConfirm.Visibility = Visibility.Collapsed;
+        }
+
+        // Expresión regular sencilla para validar el formato del correo electrónico
+        private bool EsCorreoValido(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private async void BtnGuardar_Click(object sender, RoutedEventArgs e)
         {
-            // Validar campos vacíos básicos
-            if (string.IsNullOrWhiteSpace(TxtNombre.Text) ||
-                string.IsNullOrWhiteSpace(TxtEmail.Text) ||
-                string.IsNullOrWhiteSpace(TxtPassword.Password))
+            LimpiarErroresUI();
+            bool hayErrores = false;
+
+            // 1. Validar Nombre
+            if (string.IsNullOrWhiteSpace(TxtNombre.Text))
             {
-                await MostrarAlerta("Campos requeridos", "Por favor, llena al menos el Nombre, Correo y Contraseña.");
-                return;
+                TxtErrorNombre.Text = "El campo nombre es obligatorio.";
+                TxtErrorNombre.Visibility = Visibility.Visible;
+                hayErrores = true;
             }
 
-            // Validar contraseñas iguales
+            // 2. Validar Correo
+            if (string.IsNullOrWhiteSpace(TxtEmail.Text))
+            {
+                TxtErrorEmail.Text = "El correo electrónico es obligatorio.";
+                TxtErrorEmail.Visibility = Visibility.Visible;
+                hayErrores = true;
+            }
+            else if (!EsCorreoValido(TxtEmail.Text.Trim()))
+            {
+                TxtErrorEmail.Text = "Ingrese una dirección de correo válida.";
+                TxtErrorEmail.Visibility = Visibility.Visible;
+                hayErrores = true;
+            }
+
+            // 3. Validar Rol (Asegurar que no esté en la opción por defecto)
+            if (CmbRol.SelectedIndex <= 0)
+            {
+                TxtErrorRol.Text = "Debe seleccionar un rol válido.";
+                TxtErrorRol.Visibility = Visibility.Visible;
+                hayErrores = true;
+            }
+
+            // 4. Validar Contraseña (mínimo 8 caracteres)
+            if (string.IsNullOrWhiteSpace(TxtPassword.Password))
+            {
+                TxtErrorPassword.Text = "La contraseña es obligatoria.";
+                TxtErrorPassword.Visibility = Visibility.Visible;
+                hayErrores = true;
+            }
+            else if (TxtPassword.Password.Length < 8)
+            {
+                TxtErrorPassword.Text = "La contraseña debe tener al menos 8 caracteres.";
+                TxtErrorPassword.Visibility = Visibility.Visible;
+                hayErrores = true;
+            }
+
+            // 5. Validar Confirmación de Contraseña
             if (TxtPassword.Password != TxtPasswordConfirm.Password)
             {
-                await MostrarAlerta("Error de validación", "Las contraseñas no coinciden.");
+                TxtErrorPasswordConfirm.Text = "Las contraseñas no coinciden.";
+                TxtErrorPasswordConfirm.Visibility = Visibility.Visible;
+                hayErrores = true;
+            }
+
+            // Si hay errores locales, detenemos el proceso y mostramos la alerta general
+            if (hayErrores)
+            {
+                await MostrarAlerta("Error de validación", "Uno o más campos son incorrectos.");
                 return;
             }
 
-            // Obtener el rol seleccionado
-            string rolSeleccionado = "Vendedor";
-            if (CmbRol.SelectedItem is ComboBoxItem selectedItem && selectedItem.Content != null)
-            {
-                rolSeleccionado = selectedItem.Content.ToString();
-            }
+            string rolSeleccionado = ((ComboBoxItem)CmbRol.SelectedItem).Content.ToString();
 
             var nuevoUsuario = new
             {
@@ -79,6 +146,7 @@ namespace Sistema_funerario_mascotas.Views.Users
                 var client = new HttpClient();
                 var request = new HttpRequestMessage(HttpMethod.Post, "http://127.0.0.1:8000/api/users");
 
+                request.Headers.Add("Accept", "application/json");
                 request.Headers.Add("Authorization", $"Bearer {SessionManager.AuthToken}");
 
                 var jsonContent = JsonSerializer.Serialize(nuevoUsuario);
@@ -89,13 +157,20 @@ namespace Sistema_funerario_mascotas.Views.Users
                 if (response.IsSuccessStatusCode)
                 {
                     await MostrarAlerta("Éxito", "¡Usuario creado exitosamente!");
-
-                    // Opcional: Limpiar campos o redirigir
+                    BtnCancelar_Click(null, null); // Limpiar formulario
                 }
                 else
                 {
-                    var errorMsg = await response.Content.ReadAsStringAsync();
-                    await MostrarAlerta("Error de API", $"No se pudo guardar el usuario: {errorMsg}");
+                    // Si el servidor aún rechaza algo (ej. correo ya registrado en BD), lo manejamos de forma limpia
+                    var errorResponse = await response.Content.ReadAsStringAsync();
+
+                    if (errorResponse.Contains("email"))
+                    {
+                        TxtErrorEmail.Text = "Este correo electrónico ya está registrado.";
+                        TxtErrorEmail.Visibility = Visibility.Visible;
+                    }
+
+                    await MostrarAlerta("Error de servidor", "No se pudo guardar el usuario. Verifique los datos.");
                 }
             }
             catch (Exception ex)
@@ -104,7 +179,6 @@ namespace Sistema_funerario_mascotas.Views.Users
             }
         }
 
-        // Método auxiliar para mostrar los MessageBox de WPF UI de forma limpia
         private async System.Threading.Tasks.Task MostrarAlerta(string titulo, string mensaje)
         {
             var customDialog = new CustomMessageWindow(titulo, mensaje)
@@ -115,9 +189,17 @@ namespace Sistema_funerario_mascotas.Views.Users
             customDialog.ShowDialog();
             await System.Threading.Tasks.Task.CompletedTask;
         }
+
         private void BtnCancelar_Click(object sender, RoutedEventArgs e)
         {
-            // Lógica para cancelar o volver atrás
+            LimpiarErroresUI();
+            TxtApellidos.Clear();
+            TxtEmail.Clear();
+            TxtNombre.Clear();
+            TxtTelefono.Clear();
+            TxtPassword.Clear();
+            TxtPasswordConfirm.Clear();
+            CmbRol.SelectedIndex = 0;
         }
     }
 }
