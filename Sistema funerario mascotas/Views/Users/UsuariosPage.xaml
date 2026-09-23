@@ -100,7 +100,7 @@
 
                                         <!-- Botones de Acción -->
                                         <StackPanel Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Center">
-                                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#0EA5E9" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Ver">
+                                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#0EA5E9" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Ver" Click="IrDetallesUsuario_Click">
                                                 <ui:SymbolIcon Symbol="Eye24" FontSize="14"/>
                                             </Button>
                                             <Button Width="32" Height="32" Margin="3" Padding="0" Background="#EAB308" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Editar" Click="IrEditarUsuario_Click">

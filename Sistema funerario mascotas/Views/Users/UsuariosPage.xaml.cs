@@ -69,14 +69,20 @@ namespace Sistema_funerario_mascotas
 
                         var response = await client.SendAsync(request);
 
-                        if (response.IsSuccessStatusCode)
+                        int miUsuarioId = int.Parse(SessionManager.UserId);
+
+                        // Si el ID eliminado coincide con el mío, cerramos el programa
+                        if (usuarioId == miUsuarioId)
                         {
-                            // Actualizamos la lista llamando de nuevo a la API
-                            CargarUsuarios();
+                            MessageBox.Show("Has eliminado tu propia cuenta de usuario. El programa se cerrará.", "Sesión Finalizada", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                            // Cierra la aplicación WPF por completo
+                            Application.Current.Shutdown();
                         }
                         else
                         {
-                            MessageBox.Show("No se pudo eliminar el usuario seleccionado.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            // Si borramos a otro usuario, simplemente recargamos la lista
+                            CargarUsuarios();
                         }
                     }
                     catch (Exception ex)
@@ -100,6 +106,15 @@ namespace Sistema_funerario_mascotas
                 this.NavigationService.Navigate(new Views.Users.EditarUsuarioPage(usuario));
             }
         }
+
+        private void IrDetallesUsuario_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.DataContext is UsuarioModel usuario)
+            {
+                this.NavigationService.Navigate(new Views.Users.DetallesUsuarioPage(usuario));
+            }
+        }
+
 
         private void ExportPdf_Click(object sender, RoutedEventArgs e) { }
         private void ExportExcel_Click(object sender, RoutedEventArgs e) { }

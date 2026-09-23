@@ -54,6 +54,7 @@ namespace Sistema_funerario_mascotas
                     // Guardamos el token en memoria
                     SessionManager.AuthToken = root.GetProperty("token").GetString();
                     SessionManager.UserName = root.GetProperty("user").GetProperty("name").GetString();
+                    SessionManager.UserId = root.GetProperty("user").GetProperty("id").GetInt32().ToString();
 
                     // Abrimos la ventana principal y cerramos el login
                     MainWindow mainWindow = new MainWindow();
