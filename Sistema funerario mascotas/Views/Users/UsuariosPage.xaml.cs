@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Sistema_funerario_mascotas
 {
@@ -114,6 +115,7 @@ namespace Sistema_funerario_mascotas
                 this.NavigationService.Navigate(new Views.Users.DetallesUsuarioPage(usuario));
             }
         }
+
 
 
         private void ExportPdf_Click(object sender, RoutedEventArgs e) { }

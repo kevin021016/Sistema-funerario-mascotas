@@ -46,80 +46,97 @@
         </Grid>
 
         <!-- Contenedor de la Tabla -->
-        <!-- Contenedor de la Tabla -->
         <Border Grid.Row="3" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="15">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <StackPanel>
-                    <!-- Cabecera de la Tabla -->
-                    <Grid Margin="0,0,0,15">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="1.5*"/>
-                            <ColumnDefinition Width="1.5*"/>
-                            <ColumnDefinition Width="150"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="NOMBRE" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
-                        <TextBlock Grid.Column="1" Text="APELLIDOS" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
-                        <TextBlock Grid.Column="2" Text="EMAIL" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
-                        <TextBlock Grid.Column="3" Text="ÚLTIMA VEZ ACTIVO" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
-                        <TextBlock Grid.Column="4" Text="ACCIONES" FontWeight="Bold" FontSize="11" Opacity="0.6" HorizontalAlignment="Center"/>
-                    </Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                    <!-- Separador sutil -->
-                    <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,0,0,10"/>
+                <!-- Cabecera de la Tabla -->
+                <Grid Grid.Row="0" Margin="0,0,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="NOMBRE" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
+                    <TextBlock Grid.Column="1" Text="APELLIDOS" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
+                    <TextBlock Grid.Column="2" Text="EMAIL" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
+                    <TextBlock Grid.Column="3" Text="ÚLTIMA VEZ ACTIVO" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
+                    <TextBlock Grid.Column="4" Text="ACCIONES" FontWeight="Bold" FontSize="11" Opacity="0.6" HorizontalAlignment="Center"/>
+                </Grid>
 
-                    <!-- LISTA DINÁMICA DE USUARIOS -->
-                    <ItemsControl x:Name="IcUsuarios">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <Grid Margin="0,10,0,10" VerticalAlignment="Center">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="1.5*"/>
-                                            <ColumnDefinition Width="1.5*"/>
-                                            <ColumnDefinition Width="150"/>
-                                        </Grid.ColumnDefinitions>
+                <!-- Separador sutil -->
+                <Rectangle Grid.Row="1" Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,0,0,10"/>
 
-                                        <!-- Nombre y Rol -->
-                                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding name}" FontWeight="SemiBold"/>
-                                            <TextBlock Text="{Binding rol}" Foreground="#3B82F6" FontSize="12"/>
-                                        </StackPanel>
+                <!-- LISTA DINÁMICA DE USUARIOS CON WPF UI LISTVIEW -->
+                <ui:ListView Grid.Row="2" x:Name="IcUsuarios"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto">
 
-                                        <!-- Apellidos -->
-                                        <TextBlock Grid.Column="1" Text="{Binding apellidos}" VerticalAlignment="Center" Opacity="0.9"/>
+                    <ui:ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ui:ListViewItem}">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="Focusable" Value="False"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ui:ListView.ItemContainerStyle>
 
-                                        <!-- Email -->
-                                        <TextBlock Grid.Column="2" Text="{Binding email}" VerticalAlignment="Center" Opacity="0.9"/>
+                    <ui:ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Grid Margin="0,10,0,10" VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="1.5*"/>
+                                        <ColumnDefinition Width="1.5*"/>
+                                        <ColumnDefinition Width="150"/>
+                                    </Grid.ColumnDefinitions>
 
-                                        <!-- Última vez activo -->
-                                        <TextBlock Grid.Column="3" Text="{Binding last_active_at, TargetNullValue='N/A'}" VerticalAlignment="Center" Opacity="0.7"/>
+                                    <!-- Nombre y Rol -->
+                                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding name}" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding rol}" Foreground="#3B82F6" FontSize="12"/>
+                                    </StackPanel>
 
-                                        <!-- Botones de Acción -->
-                                        <StackPanel Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Center">
-                                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#0EA5E9" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Ver" Click="IrDetallesUsuario_Click">
-                                                <ui:SymbolIcon Symbol="Eye24" FontSize="14"/>
-                                            </Button>
-                                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#EAB308" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Editar" Click="IrEditarUsuario_Click">
-                                                <ui:SymbolIcon Symbol="Edit24" FontSize="14"/>
-                                            </Button>
-                                            <Button Width="32" Height="32" Margin="3" Padding="0" Background="#EF4444" BorderBrush="{x:Null}" 
-                                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Eliminar" Click="BtnEliminar_Click" CommandParameter="{Binding id}">
-                                                <ui:SymbolIcon Symbol="Delete24" FontSize="14"/>
-                                            </Button>
-                                        </StackPanel>
-                                    </Grid>
-                                    <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,5"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                                    <!-- Apellidos -->
+                                    <TextBlock Grid.Column="1" Text="{Binding apellidos}" VerticalAlignment="Center" Opacity="0.9"/>
 
-                </StackPanel>
-            </ScrollViewer>
+                                    <!-- Email -->
+                                    <TextBlock Grid.Column="2" Text="{Binding email}" VerticalAlignment="Center" Opacity="0.9"/>
+
+                                    <!-- Última vez activo -->
+                                    <TextBlock Grid.Column="3" Text="{Binding last_active_at, TargetNullValue='N/A'}" VerticalAlignment="Center" Opacity="0.7"/>
+
+                                    <!-- Botones de Acción -->
+                                    <StackPanel Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Button Width="32" Height="32" Margin="3" Padding="0" Background="#0EA5E9" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Ver" Click="IrDetallesUsuario_Click">
+                                            <ui:SymbolIcon Symbol="Eye24" FontSize="14"/>
+                                        </Button>
+                                        <Button Width="32" Height="32" Margin="3" Padding="0" Background="#EAB308" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Editar" Click="IrEditarUsuario_Click">
+                                            <ui:SymbolIcon Symbol="Edit24" FontSize="14"/>
+                                        </Button>
+                                        <Button Width="32" Height="32" Margin="3" Padding="0" Background="#EF4444" BorderBrush="{x:Null}" 
+                                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Eliminar" Click="BtnEliminar_Click" CommandParameter="{Binding id}">
+                                            <ui:SymbolIcon Symbol="Delete24" FontSize="14"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                                <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,5"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ui:ListView.ItemTemplate>
+                </ui:ListView>
+            </Grid>
         </Border>
 
         <!-- Botones de Exportar al final -->
