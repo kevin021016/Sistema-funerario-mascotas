@@ -1,0 +1,32 @@
+﻿<ui:FluentWindow x:Class="Sistema_funerario_mascotas.Views.ConfirmDialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        Title="Confirmación" 
+        SizeToContent="Height" 
+        MinHeight="160" 
+        Width="380"
+        WindowStartupLocation="CenterOwner" 
+        ResizeMode="NoResize"
+        ExtendsContentIntoTitleBar="True"
+        WindowBackdropType="Mica"
+        Background="{DynamicResource ApplicationBackgroundBrush}"
+        Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+
+    <Grid Margin="25,35,25,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="TxtTitle" Grid.Row="0" FontSize="18" FontWeight="Bold" Margin="0,0,0,8"/>
+        <TextBlock x:Name="TxtMessage" Grid.Row="1" TextWrapping="Wrap" Opacity="0.8" FontSize="14" Margin="0,0,0,20"/>
+
+        <!-- Botones de Acción -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <ui:Button Content="No" Appearance="Secondary" Width="90" Margin="0,0,10,0" Click="BtnNo_Click"/>
+            <ui:Button Content="Sí" Appearance="Primary" Width="90" Click="BtnSi_Click"/>
+        </StackPanel>
+    </Grid>
+</ui:FluentWindow>

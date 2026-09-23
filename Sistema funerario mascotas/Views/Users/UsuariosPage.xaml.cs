@@ -1,4 +1,5 @@
-﻿using Sistema_funerario_mascotas.Views.Users;
+﻿using Sistema_funerario_mascotas.Views;
+using Sistema_funerario_mascotas.Views.Users;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -40,6 +41,49 @@ namespace Sistema_funerario_mascotas
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al conectar con la API: {ex.Message}", "Error de conexión", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async void BtnEliminar_Click(object sender, RoutedEventArgs e)
+        {
+            // Obtenemos el ID del usuario desde el CommandParameter del botón presionado
+            if (sender is Button button && button.CommandParameter is int usuarioId)
+            {
+                // Mostramos nuestra ventana de confirmación personalizada
+                var confirmWindow = new ConfirmDialogWindow("Confirmar Eliminación", "¿Estás seguro de que deseas eliminar este usuario?")
+                {
+                    Owner = Application.Current.MainWindow
+                };
+
+                confirmWindow.ShowDialog();
+
+                // Si el usuario presionó "Sí"
+                if (confirmWindow.Confirmed)
+                {
+                    try
+                    {
+                        var client = new HttpClient();
+                        var request = new HttpRequestMessage(HttpMethod.Delete, $"http://127.0.0.1:8000/api/users/{usuarioId}");
+                        request.Headers.Add("Accept", "application/json");
+                        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", SessionManager.AuthToken);
+
+                        var response = await client.SendAsync(request);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            // Actualizamos la lista llamando de nuevo a la API
+                            CargarUsuarios();
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se pudo eliminar el usuario seleccionado.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error de conexión: {ex.Message}", "Excepción", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
             }
         }
 
