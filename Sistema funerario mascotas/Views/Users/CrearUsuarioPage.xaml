@@ -20,8 +20,6 @@
 
         <!-- Migas de pan (Breadcrumb) con funcionalidad de clic -->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
-            <TextBlock Text="Home" Opacity="0.5" FontSize="12" Cursor="Hand" MouseLeftButtonUp="BreadcrumbHome_Click"/>
-            <TextBlock Text=" > " Opacity="0.5" FontSize="12" Margin="5,0"/>
             <TextBlock Text="Dashboard" Opacity="0.5" FontSize="12" Cursor="Hand" MouseLeftButtonUp="BreadcrumbDashboard_Click"/>
             <TextBlock Text=" > " Opacity="0.5" FontSize="12" Margin="5,0"/>
             <TextBlock Text="Lista de usuarios" Opacity="0.5" FontSize="12" Cursor="Hand" MouseLeftButtonUp="BreadcrumbUsuarios_Click"/>

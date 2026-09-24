@@ -130,13 +130,7 @@ namespace Sistema_funerario_mascotas.Views.Users
 
         private void BreadcrumbDashboard_Click(object sender, MouseButtonEventArgs e)
         {
-            // Ajusta esto según el nombre de tu vista de Dashboard si aplica
-            // this.NavigationService.Navigate(new DashboardPage());
-        }
-
-        private void BreadcrumbHome_Click(object sender, MouseButtonEventArgs e)
-        {
-            // Opcional si tienes vista Home
+            this.NavigationService.Navigate(new DashboardPage());
         }
 
 
