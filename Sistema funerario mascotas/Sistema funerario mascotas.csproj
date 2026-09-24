@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="PDFsharp" Version="6.2.4" />
     <PackageReference Include="WPF-UI" Version="4.3.0" />
     <PackageReference Include="QuestPDF" Version="2024.11.0" />
     <PackageReference Include="ClosedXML" Version="0.103.0" />

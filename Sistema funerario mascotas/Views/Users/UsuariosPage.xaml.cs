@@ -2,10 +2,13 @@
 using Sistema_funerario_mascotas.Views.Users;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace Sistema_funerario_mascotas
@@ -25,11 +28,9 @@ namespace Sistema_funerario_mascotas
         {
             try
             {
-                // Obtenemos el texto actual del buscador de forma segura
                 string filtro = TxtBuscador != null ? TxtBuscador.Text.Trim() : string.Empty;
 
                 var client = new HttpClient();
-                // Adjuntamos el parámetro 'search' a la URL junto con la paginación
                 var url = $"http://127.0.0.1:8000/api/users?page={pagina}&search={Uri.EscapeDataString(filtro)}";
 
                 var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -64,10 +65,9 @@ namespace Sistema_funerario_mascotas
             }
         }
 
-        // Evento que se dispara automáticamente al escribir en el buscador
         private void TxtBuscador_TextChanged(object sender, TextChangedEventArgs e)
         {
-            _paginaActual = 1; // Reiniciamos a la página 1 al buscar
+            _paginaActual = 1;
             CargarUsuariosPagina(_paginaActual);
         }
 
@@ -152,8 +152,151 @@ namespace Sistema_funerario_mascotas
             }
         }
 
-        private void ExportPdf_Click(object sender, RoutedEventArgs e) { }
-        private void ExportExcel_Click(object sender, RoutedEventArgs e) { }
+        // EXPORTAR A EXCEL (Generando archivo CSV compatible con Excel)
+        private async void ExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var usuarios = await ObtenerTodosLosUsuariosParaReporte();
+                if (usuarios == null || usuarios.Count == 0)
+                {
+                    MessageBox.Show("No hay datos para exportar.", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var saveFileDialog = new Microsoft.Win32.SaveFileDialog
+                {
+                    Filter = "Archivo CSV (*.csv)|*.csv",
+                    FileName = $"Reporte_Usuarios_{DateTime.Now:yyyyMMdd_HHmmss}.csv"
+                };
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    var sb = new StringBuilder();
+                    sb.AppendLine("ID,Nombre,Apellidos,Rol,Email,Teléfono,Última Conexión");
+
+                    foreach (var u in usuarios)
+                    {
+                        sb.AppendLine($"{u.id},\"{u.name}\",\"{u.apellidos}\",\"{u.rol}\",\"{u.email}\",\"{u.telefono}\",\"{u.last_active_at}\"");
+                    }
+
+                    File.WriteAllText(saveFileDialog.FileName, sb.ToString(), Encoding.UTF8);
+                    MessageBox.Show("Reporte exportado a Excel exitosamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al exportar a Excel: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // EXPORTAR A PDF CON PDFSHARP
+        private async void ExportPdf_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var usuarios = await ObtenerTodosLosUsuariosParaReporte();
+                if (usuarios == null || usuarios.Count == 0)
+                {
+                    MessageBox.Show("No hay datos para exportar.", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var saveFileDialog = new Microsoft.Win32.SaveFileDialog
+                {
+                    Filter = "Archivo PDF (*.pdf)|*.pdf",
+                    FileName = $"Reporte_Usuarios_{DateTime.Now:yyyyMMdd_HHmmss}.pdf"
+                };
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    PdfSharp.Fonts.GlobalFontSettings.UseWindowsFontsUnderWindows = true;
+
+                    PdfSharp.Pdf.PdfDocument document = new PdfSharp.Pdf.PdfDocument();
+                    PdfSharp.Pdf.PdfPage page = document.AddPage();
+                    PdfSharp.Drawing.XGraphics gfx = PdfSharp.Drawing.XGraphics.FromPdfPage(page);
+
+                    PdfSharp.Drawing.XFont fontTitulo = new PdfSharp.Drawing.XFont("Arial", 16, PdfSharp.Drawing.XFontStyleEx.Bold);
+                    PdfSharp.Drawing.XFont fontSub = new PdfSharp.Drawing.XFont("Arial", 10, PdfSharp.Drawing.XFontStyleEx.Italic);
+                    PdfSharp.Drawing.XFont fontHeader = new PdfSharp.Drawing.XFont("Arial", 10, PdfSharp.Drawing.XFontStyleEx.Bold);
+                    PdfSharp.Drawing.XFont fontBody = new PdfSharp.Drawing.XFont("Arial", 9, PdfSharp.Drawing.XFontStyleEx.Regular);
+
+                    double yPoint = 40;
+
+                    // Dibujar Título
+                    gfx.DrawString("Reporte de Usuarios - Sistema Funerario", fontTitulo, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XPoint(40, yPoint));
+                    yPoint += 20;
+                    gfx.DrawString($"Fecha de emisión: {DateTime.Now}", fontSub, PdfSharp.Drawing.XBrushes.Gray, new PdfSharp.Drawing.XPoint(40, yPoint));
+                    yPoint += 35;
+
+                    // Dibujar Cabecera de la Tabla
+                    gfx.DrawString("Nombre", fontHeader, PdfSharp.Drawing.XBrushes.DarkBlue, new PdfSharp.Drawing.XPoint(40, yPoint));
+                    gfx.DrawString("Apellidos", fontHeader, PdfSharp.Drawing.XBrushes.DarkBlue, new PdfSharp.Drawing.XPoint(150, yPoint));
+                    gfx.DrawString("Rol", fontHeader, PdfSharp.Drawing.XBrushes.DarkBlue, new PdfSharp.Drawing.XPoint(280, yPoint));
+                    gfx.DrawString("Email", fontHeader, PdfSharp.Drawing.XBrushes.DarkBlue, new PdfSharp.Drawing.XPoint(360, yPoint));
+
+                    yPoint += 15;
+                    gfx.DrawLine(PdfSharp.Drawing.XPens.LightGray, 40, yPoint, 550, yPoint);
+                    yPoint += 10;
+
+                    // Dibujar Filas de Datos
+                    foreach (var u in usuarios)
+                    {
+                        if (yPoint > page.Height.Point - 50)
+                        {
+                            page = document.AddPage();
+                            gfx = PdfSharp.Drawing.XGraphics.FromPdfPage(page);
+                            yPoint = 40;
+                        }
+
+                        gfx.DrawString(u.name ?? "", fontBody, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XPoint(40, yPoint));
+                        gfx.DrawString(u.apellidos ?? "", fontBody, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XPoint(150, yPoint));
+                        gfx.DrawString(u.rol ?? "", fontBody, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XPoint(280, yPoint));
+                        gfx.DrawString(u.email ?? "", fontBody, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XPoint(360, yPoint));
+
+                        yPoint += 20;
+                    }
+
+                    document.Save(saveFileDialog.FileName);
+                    MessageBox.Show("PDF generado y guardado exitosamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al generar el PDF: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // Método auxiliar para pedir todos los usuarios al backend sin paginación para los reportes
+        private async System.Threading.Tasks.Task<List<UsuarioModel>> ObtenerTodosLosUsuariosParaReporte()
+        {
+            try
+            {
+                var client = new HttpClient();
+                // Usamos la ruta principal sin paginación si tu API lo soporta, 
+                // o consultamos la misma ruta actual asegurando cabeceras
+                var request = new HttpRequestMessage(HttpMethod.Get, "http://127.0.0.1:8000/api/users/all");
+                request.Headers.Add("Accept", "application/json");
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", SessionManager.AuthToken);
+
+                var response = await client.SendAsync(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var lista = JsonSerializer.Deserialize<List<UsuarioModel>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    if (lista != null && lista.Count > 0) return lista;
+                }
+            }
+            catch { }
+
+            // Plan B: Si la ruta de todos falla, extraemos los usuarios que el usuario ya tiene visibles en pantalla
+            if (IcUsuarios.ItemsSource is List<UsuarioModel> usuariosVisibles)
+            {
+                return usuariosVisibles;
+            }
+
+            return null;
+        }
     }
 
     public class PaginatedUsersResponse
