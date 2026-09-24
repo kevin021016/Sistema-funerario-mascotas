@@ -159,5 +159,8 @@
             <ui:Button Content="Exportar a Excel" Margin="5,0,0,0" Click="ExportExcel_Click" Appearance="Secondary"/>
         </StackPanel>
 
+        <ui:SnackbarPresenter x:Name="SnackbarHost" Grid.Row="0" Grid.RowSpan="5"/>
+
+
     </Grid>
 </Page>

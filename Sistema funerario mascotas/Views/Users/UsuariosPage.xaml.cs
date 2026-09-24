@@ -89,6 +89,23 @@ namespace Sistema_funerario_mascotas
             }
         }
 
+        // Muestra una notificación tipo Snackbar (éxito o error)
+        private async void MostrarSnackbar(string titulo, string mensaje, bool exito)
+        {
+            var snackbar = new Wpf.Ui.Controls.Snackbar(SnackbarHost)
+            {
+                Title = titulo,
+                Content = mensaje,
+                Appearance = exito ? Wpf.Ui.Controls.ControlAppearance.Dark : Wpf.Ui.Controls.ControlAppearance.Danger,
+                Icon = new Wpf.Ui.Controls.SymbolIcon
+                {
+                    Symbol = exito ? Wpf.Ui.Controls.SymbolRegular.CheckmarkCircle24 : Wpf.Ui.Controls.SymbolRegular.DismissCircle24
+                },
+                Timeout = TimeSpan.FromSeconds(4)
+            };
+
+            await snackbar.ShowAsync();
+        }
         private async void BtnEliminar_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.CommandParameter is int usuarioId)
@@ -111,6 +128,12 @@ namespace Sistema_funerario_mascotas
 
                         var response = await client.SendAsync(request);
 
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            MostrarSnackbar("Error", "No se pudo eliminar el usuario.", exito: false);
+                            return;
+                        }
+
                         int miUsuarioId = int.Parse(SessionManager.UserId);
 
                         if (usuarioId == miUsuarioId)
@@ -120,12 +143,13 @@ namespace Sistema_funerario_mascotas
                         }
                         else
                         {
+                            MostrarSnackbar("Éxito", "Usuario eliminado correctamente.", exito: true);
                             CargarUsuariosPagina(_paginaActual);
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error de conexión: {ex.Message}", "Excepción", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MostrarSnackbar("Error", $"Error de conexión: {ex.Message}", exito: false);
                     }
                 }
             }
