@@ -39,7 +39,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- Buscador -->
-            <ui:TextBox Grid.Column="0" PlaceholderText="Buscar por nombre..." Icon="{ui:SymbolIcon Search24}"/>
+            <ui:TextBox Grid.Column="0" x:Name="TxtBuscador" PlaceholderText="Buscar por nombre, correo..." Icon="{ui:SymbolIcon Search24}" TextChanged="TxtBuscador_TextChanged"/>
 
             <!-- Botón Agregar Usuario -->
             <ui:Button Grid.Column="2" Content="+ Agregar usuario" Foreground="White" FontWeight="Medium" Cursor="Hand" Appearance="Primary" Click="IrAgregarUsuario_Click"/>

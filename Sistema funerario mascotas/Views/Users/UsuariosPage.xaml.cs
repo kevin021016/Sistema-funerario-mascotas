@@ -25,8 +25,14 @@ namespace Sistema_funerario_mascotas
         {
             try
             {
+                // Obtenemos el texto actual del buscador de forma segura
+                string filtro = TxtBuscador != null ? TxtBuscador.Text.Trim() : string.Empty;
+
                 var client = new HttpClient();
-                var request = new HttpRequestMessage(HttpMethod.Get, $"http://127.0.0.1:8000/api/users?page={pagina}");
+                // Adjuntamos el parámetro 'search' a la URL junto con la paginación
+                var url = $"http://127.0.0.1:8000/api/users?page={pagina}&search={Uri.EscapeDataString(filtro)}";
+
+                var request = new HttpRequestMessage(HttpMethod.Get, url);
                 request.Headers.Add("Accept", "application/json");
                 request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", SessionManager.AuthToken);
 
@@ -35,10 +41,8 @@ namespace Sistema_funerario_mascotas
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonString = await response.Content.ReadAsStringAsync();
-
                     var opciones = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
-                    // Deserializamos usando el modelo de respuesta paginada de Laravel
                     var paginatedResponse = JsonSerializer.Deserialize<PaginatedUsersResponse>(jsonString, opciones);
 
                     if (paginatedResponse != null)
@@ -49,7 +53,6 @@ namespace Sistema_funerario_mascotas
 
                         TxtPaginaActual.Text = $"Página {_paginaActual} de {_ultimaPagina}";
 
-                        // Habilitar / deshabilitar botones según la página actual
                         BtnAnterior.IsEnabled = _paginaActual > 1;
                         BtnSiguiente.IsEnabled = _paginaActual < _ultimaPagina;
                     }
@@ -59,6 +62,13 @@ namespace Sistema_funerario_mascotas
             {
                 MessageBox.Show($"Error al conectar con la API: {ex.Message}", "Error de conexión", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        // Evento que se dispara automáticamente al escribir en el buscador
+        private void TxtBuscador_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            _paginaActual = 1; // Reiniciamos a la página 1 al buscar
+            CargarUsuariosPagina(_paginaActual);
         }
 
         private async void BtnAnterior_Click(object sender, RoutedEventArgs e)
@@ -146,7 +156,6 @@ namespace Sistema_funerario_mascotas
         private void ExportExcel_Click(object sender, RoutedEventArgs e) { }
     }
 
-    // Modelos auxiliares para mapear la respuesta paginada de Laravel
     public class PaginatedUsersResponse
     {
         public int current_page { get; set; }
