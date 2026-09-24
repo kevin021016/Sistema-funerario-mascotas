@@ -29,7 +29,23 @@
         </StackPanel>
 
         <!-- Título -->
-        <TextBlock Grid.Row="1" Text="Detalles y Actividad del Usuario" FontSize="26" FontWeight="Bold" Margin="0,0,0,20"/>
+        <Grid Grid.Row="1" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Botón Volver con flechita -->
+            <ui:Button Grid.Column="0" Width="38" Height="38" Padding="0" Margin="0,0,15,0" 
+               Appearance="Secondary" ToolTip="Volver a la lista" 
+               HorizontalAlignment="Left" VerticalAlignment="Center" 
+               Click="BtnVolver_Click">
+                <ui:SymbolIcon Symbol="ArrowLeft24" FontSize="16"/>
+            </ui:Button>
+
+            <!-- Título de la página -->
+            <TextBlock Grid.Column="1" Text="Detalles de usuario" FontSize="26" FontWeight="Bold" VerticalAlignment="Center"/>
+        </Grid>
 
         <!-- TARJETA 1: INFORMACIÓN BÁSICA DEL USUARIO -->
         <Border Grid.Row="2" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="25" Margin="0,0,0,20">

@@ -209,11 +209,37 @@ namespace Sistema_funerario_mascotas.Views.Users
             await System.Threading.Tasks.Task.CompletedTask;
         }
 
+        private void BtnVolver_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.NavigationService.CanGoBack)
+            {
+                this.NavigationService.GoBack();
+            }
+            else
+            {
+                this.NavigationService.Navigate(new UsuariosPage());
+            }
+        }
+
         private void BtnCancelar_Click(object sender, RoutedEventArgs e)
         {
-            // Volver atrás sin guardar
-            if (this.NavigationService.CanGoBack) this.NavigationService.GoBack();
-            else this.NavigationService.Navigate(new System.Uri("/Views/Users/UsuariosPage.xaml", System.UriKind.Relative));
+            BtnVolver_Click(sender, e);
+        }
+
+        private void BreadcrumbUsuarios_Click(object sender, MouseButtonEventArgs e)
+        {
+            this.NavigationService.Navigate(new UsuariosPage());
+        }
+
+        private void BreadcrumbDashboard_Click(object sender, MouseButtonEventArgs e)
+        {
+            // Ajusta esto según el nombre de tu vista de Dashboard si aplica
+            // this.NavigationService.Navigate(new DashboardPage());
+        }
+
+        private void BreadcrumbHome_Click(object sender, MouseButtonEventArgs e)
+        {
+            // Opcional si tienes vista Home
         }
     }
 }

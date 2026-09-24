@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Sistema_funerario_mascotas.Views.Users
 {
@@ -108,7 +109,34 @@ namespace Sistema_funerario_mascotas.Views.Users
         private void BtnVolver_Click(object sender, RoutedEventArgs e)
         {
             if (this.NavigationService.CanGoBack)
+            {
                 this.NavigationService.GoBack();
+            }
+            else
+            {
+                this.NavigationService.Navigate(new UsuariosPage());
+            }
+        }
+
+        private void BtnCancelar_Click(object sender, RoutedEventArgs e)
+        {
+            BtnVolver_Click(sender, e);
+        }
+
+        private void BreadcrumbUsuarios_Click(object sender, MouseButtonEventArgs e)
+        {
+            this.NavigationService.Navigate(new UsuariosPage());
+        }
+
+        private void BreadcrumbDashboard_Click(object sender, MouseButtonEventArgs e)
+        {
+            // Ajusta esto según el nombre de tu vista de Dashboard si aplica
+            // this.NavigationService.Navigate(new DashboardPage());
+        }
+
+        private void BreadcrumbHome_Click(object sender, MouseButtonEventArgs e)
+        {
+            // Opcional si tienes vista Home
         }
 
 
