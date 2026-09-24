@@ -12,31 +12,47 @@ namespace Sistema_funerario_mascotas
 {
     public partial class UsuariosPage : Page
     {
+        private int _paginaActual = 1;
+        private int _ultimaPagina = 1;
+
         public UsuariosPage()
         {
             InitializeComponent();
-            CargarUsuarios();
+            CargarUsuariosPagina(_paginaActual);
         }
 
-        private async void CargarUsuarios()
+        private async void CargarUsuariosPagina(int pagina)
         {
             try
             {
                 var client = new HttpClient();
-                var request = new HttpRequestMessage(HttpMethod.Get, "http://127.0.0.1:8000/api/users");
+                var request = new HttpRequestMessage(HttpMethod.Get, $"http://127.0.0.1:8000/api/users?page={pagina}");
+                request.Headers.Add("Accept", "application/json");
                 request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", SessionManager.AuthToken);
+
                 var response = await client.SendAsync(request);
 
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonString = await response.Content.ReadAsStringAsync();
 
-                    // Deserializamos el JSON de Laravel a una lista de usuarios
                     var opciones = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                    var usuarios = JsonSerializer.Deserialize<List<UsuarioModel>>(jsonString, opciones);
 
-                    // Vinculamos los datos a la interfaz gráfica
-                    IcUsuarios.ItemsSource = usuarios;
+                    // Deserializamos usando el modelo de respuesta paginada de Laravel
+                    var paginatedResponse = JsonSerializer.Deserialize<PaginatedUsersResponse>(jsonString, opciones);
+
+                    if (paginatedResponse != null)
+                    {
+                        IcUsuarios.ItemsSource = paginatedResponse.data;
+                        _paginaActual = paginatedResponse.current_page;
+                        _ultimaPagina = paginatedResponse.last_page;
+
+                        TxtPaginaActual.Text = $"Página {_paginaActual} de {_ultimaPagina}";
+
+                        // Habilitar / deshabilitar botones según la página actual
+                        BtnAnterior.IsEnabled = _paginaActual > 1;
+                        BtnSiguiente.IsEnabled = _paginaActual < _ultimaPagina;
+                    }
                 }
             }
             catch (Exception ex)
@@ -45,12 +61,28 @@ namespace Sistema_funerario_mascotas
             }
         }
 
+        private async void BtnAnterior_Click(object sender, RoutedEventArgs e)
+        {
+            if (_paginaActual > 1)
+            {
+                _paginaActual--;
+                CargarUsuariosPagina(_paginaActual);
+            }
+        }
+
+        private async void BtnSiguiente_Click(object sender, RoutedEventArgs e)
+        {
+            if (_paginaActual < _ultimaPagina)
+            {
+                _paginaActual++;
+                CargarUsuariosPagina(_paginaActual);
+            }
+        }
+
         private async void BtnEliminar_Click(object sender, RoutedEventArgs e)
         {
-            // Obtenemos el ID del usuario desde el CommandParameter del botón presionado
             if (sender is Button button && button.CommandParameter is int usuarioId)
             {
-                // Mostramos nuestra ventana de confirmación personalizada
                 var confirmWindow = new ConfirmDialogWindow("Confirmar Eliminación", "¿Estás seguro de que deseas eliminar este usuario?")
                 {
                     Owner = Application.Current.MainWindow
@@ -58,7 +90,6 @@ namespace Sistema_funerario_mascotas
 
                 confirmWindow.ShowDialog();
 
-                // Si el usuario presionó "Sí"
                 if (confirmWindow.Confirmed)
                 {
                     try
@@ -72,18 +103,14 @@ namespace Sistema_funerario_mascotas
 
                         int miUsuarioId = int.Parse(SessionManager.UserId);
 
-                        // Si el ID eliminado coincide con el mío, cerramos el programa
                         if (usuarioId == miUsuarioId)
                         {
                             MessageBox.Show("Has eliminado tu propia cuenta de usuario. El programa se cerrará.", "Sesión Finalizada", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                            // Cierra la aplicación WPF por completo
                             Application.Current.Shutdown();
                         }
                         else
                         {
-                            // Si borramos a otro usuario, simplemente recargamos la lista
-                            CargarUsuarios();
+                            CargarUsuariosPagina(_paginaActual);
                         }
                     }
                     catch (Exception ex)
@@ -101,7 +128,6 @@ namespace Sistema_funerario_mascotas
 
         private void IrEditarUsuario_Click(object sender, RoutedEventArgs e)
         {
-            // El DataContext del botón está ligado al usuario correspondiente en el ItemsControl
             if (sender is Button btn && btn.DataContext is UsuarioModel usuario)
             {
                 this.NavigationService.Navigate(new Views.Users.EditarUsuarioPage(usuario));
@@ -116,13 +142,18 @@ namespace Sistema_funerario_mascotas
             }
         }
 
-
-
         private void ExportPdf_Click(object sender, RoutedEventArgs e) { }
         private void ExportExcel_Click(object sender, RoutedEventArgs e) { }
     }
 
-    // Modelo auxiliar para mapear los campos que devuelve Laravel
+    // Modelos auxiliares para mapear la respuesta paginada de Laravel
+    public class PaginatedUsersResponse
+    {
+        public int current_page { get; set; }
+        public List<UsuarioModel> data { get; set; }
+        public int last_page { get; set; }
+    }
+
     public class UsuarioModel
     {
         public int id { get; set; }
