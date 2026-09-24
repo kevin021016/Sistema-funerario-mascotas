@@ -31,7 +31,7 @@ namespace Sistema_funerario_mascotas
                 string filtro = TxtBuscador != null ? TxtBuscador.Text.Trim() : string.Empty;
 
                 var client = new HttpClient();
-                var url = $"http://127.0.0.1:8000/api/users?page={pagina}&search={Uri.EscapeDataString(filtro)}";
+                var url = $"{ApiConfig.BaseUrl}users?page={pagina}&search={Uri.EscapeDataString(filtro)}";
 
                 var request = new HttpRequestMessage(HttpMethod.Get, url);
                 request.Headers.Add("Accept", "application/json");

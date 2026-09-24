@@ -144,7 +144,7 @@ namespace Sistema_funerario_mascotas.Views.Users
             try
             {
                 var client = new HttpClient();
-                var request = new HttpRequestMessage(HttpMethod.Post, "http://127.0.0.1:8000/api/users");
+                var request = new HttpRequestMessage(HttpMethod.Post, $"{ApiConfig.BaseUrl}users");
 
                 request.Headers.Add("Accept", "application/json");
                 request.Headers.Add("Authorization", $"Bearer {SessionManager.AuthToken}");

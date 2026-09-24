@@ -54,7 +54,7 @@ namespace Sistema_funerario_mascotas.Views.Users
             try
             {
                 var client = new HttpClient();
-                var request = new HttpRequestMessage(HttpMethod.Get, $"http://127.0.0.1:8000/api/users/{_usuario.id}/logs?page={pagina}");
+                var request = new HttpRequestMessage(HttpMethod.Get, $"{ApiConfig.BaseUrl}users/{_usuario.id}/logs?page={pagina}");
                 request.Headers.Add("Accept", "application/json");
                 request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", SessionManager.AuthToken);
 
