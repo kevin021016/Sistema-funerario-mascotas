@@ -136,7 +136,8 @@ namespace Sistema_funerario_mascotas.Views.Users
             {
                 if (DateTime.TryParse(created_at, out DateTime fechaParsed))
                 {
-                    return fechaParsed.ToLocalTime().ToString("dd/MM/yyyy HH:mm");
+                    // Mostramos la hora exacta que viene de la BD sin conversiones extra
+                    return fechaParsed.ToString("yyyy-MM-dd HH:mm:ss");
                 }
                 return created_at;
             }
