@@ -321,6 +321,15 @@ namespace Sistema_funerario_mascotas
 
             return null;
         }
+
+        private void BreadcrumbDashboard_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (Window.GetWindow(this) is MainWindow mainWindow)
+            {
+                // Forzamos la navegación al Dashboard desde el NavigationView principal
+                mainWindow.RootNavigation.Navigate(typeof(DashboardPage));
+            }
+        }
     }
 
     public class PaginatedUsersResponse
