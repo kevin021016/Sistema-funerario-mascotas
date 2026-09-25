@@ -110,6 +110,15 @@ namespace Sistema_funerario_mascotas
         {
             if (sender is Button button && button.CommandParameter is int usuarioId)
             {
+                // 1. Validar primero si el ID a eliminar coincide con la sesión actual
+                int miUsuarioId = int.Parse(SessionManager.UserId);
+                if (usuarioId == miUsuarioId)
+                {
+                    MessageBox.Show("No puedes eliminar tu propia cuenta mientras estás en sesión.", "Acción no permitida", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return; // Bloquea y previene la eliminación por completo
+                }
+
+                // 2. Si no es su propia cuenta, procedemos con la confirmación habitual
                 var confirmWindow = new ConfirmDialogWindow("Confirmar Eliminación", "¿Estás seguro de que deseas eliminar este usuario?")
                 {
                     Owner = Application.Current.MainWindow
@@ -122,7 +131,7 @@ namespace Sistema_funerario_mascotas
                     try
                     {
                         var client = new HttpClient();
-                        var request = new HttpRequestMessage(HttpMethod.Delete, $"http://127.0.0.1:8000/api/users/{usuarioId}");
+                        var request = new HttpRequestMessage(HttpMethod.Delete, $"{ApiConfig.BaseUrl}users/{usuarioId}");
                         request.Headers.Add("Accept", "application/json");
                         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", SessionManager.AuthToken);
 
@@ -134,18 +143,8 @@ namespace Sistema_funerario_mascotas
                             return;
                         }
 
-                        int miUsuarioId = int.Parse(SessionManager.UserId);
-
-                        if (usuarioId == miUsuarioId)
-                        {
-                            MessageBox.Show("Has eliminado tu propia cuenta de usuario. El programa se cerrará.", "Sesión Finalizada", MessageBoxButton.OK, MessageBoxImage.Information);
-                            Application.Current.Shutdown();
-                        }
-                        else
-                        {
-                            MostrarSnackbar("Éxito", "Usuario eliminado correctamente.", exito: true);
-                            CargarUsuariosPagina(_paginaActual);
-                        }
+                        MostrarSnackbar("Éxito", "Usuario eliminado correctamente.", exito: true);
+                        CargarUsuariosPagina(_paginaActual);
                     }
                     catch (Exception ex)
                     {

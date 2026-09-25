@@ -1,0 +1,158 @@
+﻿<Page x:Class="Sistema_funerario_mascotas.Views.Clients.EditarClientePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Sistema_funerario_mascotas"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="EditarClientePage"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Migas de pan (Breadcrumb) -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock Text="Dashboard" Opacity="0.5" FontSize="12" Cursor="Hand" MouseLeftButtonUp="BreadcrumbDashboard_Click"/>
+            <TextBlock Text=" > " Opacity="0.5" FontSize="12" Margin="5,0"/>
+            <TextBlock Text="Lista de clientes" Opacity="0.5" FontSize="12" Cursor="Hand" MouseLeftButtonUp="BreadcrumbClientes_Click"/>
+            <TextBlock Text=" > " Opacity="0.5" FontSize="12" Margin="5,0"/>
+            <TextBlock Text="Editar cliente" FontSize="12" FontWeight="SemiBold"/>
+        </StackPanel>
+
+        <!-- Encabezado -->
+        <Grid Grid.Row="1" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ui:Button Grid.Column="0" Width="38" Height="38" Padding="0" Margin="0,0,15,0" 
+                       Appearance="Secondary" ToolTip="Volver a la lista" 
+                       HorizontalAlignment="Left" VerticalAlignment="Center" 
+                       Click="BtnVolver_Click">
+                <ui:SymbolIcon Symbol="ArrowLeft24" FontSize="16"/>
+            </ui:Button>
+
+            <TextBlock Grid.Column="1" Text="Editar cliente" FontSize="26" FontWeight="Bold" VerticalAlignment="Center"/>
+        </Grid>
+
+        <!-- Formulario -->
+        <Border Grid.Row="2" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="25" VerticalAlignment="Top">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- 1. CAMPOS PRINCIPALES -->
+                <Grid Grid.Row="0" Margin="0,0,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Columna Izquierda -->
+                    <StackPanel Grid.Column="0">
+                        <!-- Nombre -->
+                        <StackPanel Margin="0,0,0,15">
+                            <TextBlock Text="Nombre" Margin="0,0,0,6" FontWeight="Medium"/>
+                            <ui:TextBox x:Name="TxtNombre" PlaceholderText="Ingrese el nombre..." HorizontalAlignment="Stretch"/>
+                            <TextBlock x:Name="TxtErrorNombre" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <!-- Apellidos -->
+                        <StackPanel Margin="0,0,0,15">
+                            <TextBlock Text="Apellidos" Margin="0,0,0,6" FontWeight="Medium"/>
+                            <ui:TextBox x:Name="TxtApellidos" PlaceholderText="Ingrese los apellidos..." HorizontalAlignment="Stretch"/>
+                            <TextBlock x:Name="TxtErrorApellidos" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <!-- Fecha de Nacimiento -->
+                        <StackPanel Margin="0,0,0,15">
+                            <TextBlock Text="Fecha de Nacimiento" Margin="0,0,0,6" FontWeight="Medium"/>
+                            <ui:TextBox x:Name="TxtFechaNacimiento" PlaceholderText="DD/MM/AAAA" MaxLength="10" HorizontalAlignment="Stretch" PreviewTextInput="Fecha_PreviewTextInput" TextChanged="TxtFechaNacimiento_TextChanged"/>
+                            <TextBlock x:Name="TxtErrorFechaNacimiento" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <!-- Teléfono -->
+                        <StackPanel>
+                            <TextBlock Text="Teléfono" Margin="0,0,0,6" FontWeight="Medium"/>
+                            <ui:TextBox x:Name="TxtTelefono" PlaceholderText="Ingrese el teléfono..." HorizontalAlignment="Stretch" PreviewTextInput="Numero_PreviewTextInput" DataObject.Pasting="Texto_Pasting"/>
+                            <TextBlock x:Name="TxtErrorTelefono" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Columna Derecha -->
+                    <StackPanel Grid.Column="2">
+                        <!-- Calle -->
+                        <StackPanel Margin="0,0,0,15">
+                            <TextBlock Text="Calle" Margin="0,0,0,6" FontWeight="Medium"/>
+                            <ui:TextBox x:Name="TxtCalle" PlaceholderText="Ingrese la calle..." HorizontalAlignment="Stretch"/>
+                            <TextBlock x:Name="TxtErrorCalle" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <!-- Entre Calles -->
+                        <StackPanel Margin="0,0,0,15">
+                            <TextBlock Text="Entre Calles" Margin="0,0,0,6" FontWeight="Medium"/>
+                            <ui:TextBox x:Name="TxtEntreCalles" PlaceholderText="Ej. Zaragoza y Ocampo..." HorizontalAlignment="Stretch"/>
+                            <TextBlock x:Name="TxtErrorEntreCalles" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <!-- Colonia con Buscador -->
+                        <StackPanel Margin="0,0,0,15">
+                            <TextBlock Text="Colonia" Margin="0,0,0,6" FontWeight="Medium"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0" x:Name="CmbColonia" DisplayMemberPath="nombre" SelectedValuePath="id" HorizontalAlignment="Stretch"/>
+                                <ui:Button Grid.Column="1" Width="36" Height="36" Margin="6,0,0,0" Appearance="Secondary" ToolTip="Buscar colonia en lista" Click="BtnAbrirBuscadorColonia_Click">
+                                    <ui:SymbolIcon Symbol="Search24" FontSize="12"/>
+                                </ui:Button>
+                            </Grid>
+                            <TextBlock x:Name="TxtErrorColonia" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <!-- Celular -->
+                        <StackPanel>
+                            <TextBlock Text="Celular" Margin="0,0,0,6" FontWeight="Medium"/>
+                            <ui:TextBox x:Name="TxtCelular" PlaceholderText="Ingrese el celular..." HorizontalAlignment="Stretch" PreviewTextInput="Numero_PreviewTextInput" DataObject.Pasting="Texto_Pasting"/>
+                            <TextBlock x:Name="TxtErrorCelular" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+
+                <!-- 2. CIUDAD -->
+                <StackPanel Grid.Row="1" Margin="0,0,0,15">
+                    <TextBlock Text="Ciudad" Margin="0,0,0,6" FontWeight="Medium"/>
+                    <ui:TextBox x:Name="TxtCiudad" PlaceholderText="Ingrese la ciudad..." HorizontalAlignment="Stretch"/>
+                    <TextBlock x:Name="TxtErrorCiudad" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+                </StackPanel>
+
+                <!-- 3. REFERENCIA -->
+                <StackPanel Grid.Row="2">
+                    <TextBlock Text="Referencia de Domicilio" Margin="0,0,0,6" FontWeight="Medium"/>
+                    <ui:TextBox x:Name="TxtReferencia" PlaceholderText="Referencias adicionales..." HorizontalAlignment="Stretch" AcceptsReturn="True" Height="60"/>
+                    <TextBlock x:Name="TxtErrorReferencia" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Hidden" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Botones de Acción -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <ui:Button Content="Cancelar" Appearance="Secondary" Width="120" Margin="0,0,10,0" Click="BtnCancelar_Click"/>
+            <ui:Button Content="Guardar cambios" Appearance="Primary" Width="150" Click="BtnGuardar_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>

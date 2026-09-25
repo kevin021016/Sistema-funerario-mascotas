@@ -19,9 +19,6 @@ using System.Windows.Shapes;
 
 namespace Sistema_funerario_mascotas.Views.Clients
 {
-    /// <summary>
-    /// Lógica de interacción para ClientesPage.xaml
-    /// </summary>
     public partial class ClientesPage : Page
     {
         private int _paginaActual = 1;
@@ -40,12 +37,15 @@ namespace Sistema_funerario_mascotas.Views.Clients
 
         private void IrEditarCliente_Click(object sender, RoutedEventArgs e)
         {
-          //  IrEditarUsuario_Click(sender, e);
+            if (sender is Button button && button.DataContext is ClienteModel clienteSeleccionado)
+            {
+                this.NavigationService.Navigate(new EditarClientePage(clienteSeleccionado));
+            }
         }
 
         private void IrDetallesCliente_Click(object sender, RoutedEventArgs e)
         {
-           // IrDetallesUsuario_Click(sender, e);
+            // Lógica para detalles si se requiere
         }
 
         private async void CargarClientesPagina(int pagina)
@@ -72,7 +72,6 @@ namespace Sistema_funerario_mascotas.Views.Clients
 
                     if (paginatedResponse != null)
                     {
-                        // Usar el nombre de control que declara tu XAML (IcClientes)
                         IcClientes.ItemsSource = paginatedResponse.data;
                         _paginaActual = paginatedResponse.current_page;
                         _ultimaPagina = paginatedResponse.last_page;
@@ -114,7 +113,6 @@ namespace Sistema_funerario_mascotas.Views.Clients
             }
         }
 
-        // Muestra una notificación tipo Snackbar (éxito o error)
         private async void MostrarSnackbar(string titulo, string mensaje, bool exito)
         {
             var snackbar = new Wpf.Ui.Controls.Snackbar(SnackbarHost)
@@ -131,6 +129,7 @@ namespace Sistema_funerario_mascotas.Views.Clients
 
             await snackbar.ShowAsync();
         }
+
         private async void BtnEliminar_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.CommandParameter is int clienteId)
@@ -147,7 +146,7 @@ namespace Sistema_funerario_mascotas.Views.Clients
                     try
                     {
                         var client = new HttpClient();
-                        var request = new HttpRequestMessage(HttpMethod.Delete, $"http://127.0.0.1:8000/api/clients/{clienteId}");
+                        var request = new HttpRequestMessage(HttpMethod.Delete, $"{ApiConfig.BaseUrl}clients/{clienteId}");
                         request.Headers.Add("Accept", "application/json");
                         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", SessionManager.AuthToken);
 
@@ -159,18 +158,8 @@ namespace Sistema_funerario_mascotas.Views.Clients
                             return;
                         }
 
-                        int miClienteId = int.Parse(SessionManager.UserId);
-
-                        if (clienteId == miClienteId)
-                        {
-                            MessageBox.Show("Has eliminado tu propia cuenta de cliente. El programa se cerrará.", "Sesión Finalizada", MessageBoxButton.OK, MessageBoxImage.Information);
-                            Application.Current.Shutdown();
-                        }
-                        else
-                        {
-                            MostrarSnackbar("Éxito", "Cliente eliminado correctamente.", exito: true);
-                            CargarClientesPagina(_paginaActual);
-                        }
+                        MostrarSnackbar("Éxito", "Cliente eliminado correctamente.", exito: true);
+                        CargarClientesPagina(_paginaActual);
                     }
                     catch (Exception ex)
                     {
@@ -180,7 +169,6 @@ namespace Sistema_funerario_mascotas.Views.Clients
             }
         }
 
-        // EXPORTAR A EXCEL (Generando archivo CSV compatible con Excel)
         private async void ExportExcel_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -218,7 +206,6 @@ namespace Sistema_funerario_mascotas.Views.Clients
             }
         }
 
-        // EXPORTAR A PDF CON PDFSHARP
         private async void ExportPdf_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -251,13 +238,11 @@ namespace Sistema_funerario_mascotas.Views.Clients
 
                     double yPoint = 40;
 
-                    // Dibujar Título
                     gfx.DrawString("Reporte de Clientes - Sistema Funerario", fontTitulo, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XPoint(40, yPoint));
                     yPoint += 20;
                     gfx.DrawString($"Fecha de emisión: {DateTime.Now}", fontSub, PdfSharp.Drawing.XBrushes.Gray, new PdfSharp.Drawing.XPoint(40, yPoint));
                     yPoint += 35;
 
-                    // Dibujar Cabecera de la Tabla
                     gfx.DrawString("Nombre", fontHeader, PdfSharp.Drawing.XBrushes.DarkBlue, new PdfSharp.Drawing.XPoint(40, yPoint));
                     gfx.DrawString("Apellidos", fontHeader, PdfSharp.Drawing.XBrushes.DarkBlue, new PdfSharp.Drawing.XPoint(150, yPoint));
                     gfx.DrawString("celular", fontHeader, PdfSharp.Drawing.XBrushes.DarkBlue, new PdfSharp.Drawing.XPoint(280, yPoint));
@@ -267,7 +252,6 @@ namespace Sistema_funerario_mascotas.Views.Clients
                     gfx.DrawLine(PdfSharp.Drawing.XPens.LightGray, 40, yPoint, 550, yPoint);
                     yPoint += 10;
 
-                    // Dibujar Filas de Datos
                     foreach (var c in clientes)
                     {
                         if (yPoint > page.Height.Point - 50)
@@ -295,15 +279,12 @@ namespace Sistema_funerario_mascotas.Views.Clients
             }
         }
 
-        // Método auxiliar para pedir todos los clientes al backend sin paginación para los reportes
         private async System.Threading.Tasks.Task<List<ClienteModel>> ObtenerTodosLosClientesParaReporte()
         {
             try
             {
                 var client = new HttpClient();
-                // Usamos la ruta principal sin paginación si tu API lo soporta, 
-                // o consultamos la misma ruta actual asegurando cabeceras
-                var request = new HttpRequestMessage(HttpMethod.Get, "http://127.0.0.1:8000/api/clients/all");
+                var request = new HttpRequestMessage(HttpMethod.Get, $"{ApiConfig.BaseUrl}clients/all");
                 request.Headers.Add("Accept", "application/json");
                 request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", SessionManager.AuthToken);
 
@@ -317,7 +298,6 @@ namespace Sistema_funerario_mascotas.Views.Clients
             }
             catch { }
 
-            // Plan B: Si la ruta de todos falla, extraemos los clientes que el usuario ya tiene visibles en pantalla
             if (IcClientes.ItemsSource is List<ClienteModel> clientesVisibles)
             {
                 return clientesVisibles;
@@ -330,7 +310,6 @@ namespace Sistema_funerario_mascotas.Views.Clients
         {
             if (Window.GetWindow(this) is MainWindow mainWindow)
             {
-                // Forzamos la navegación al Dashboard desde el NavigationView principal
                 mainWindow.RootNavigation.Navigate(typeof(DashboardPage));
             }
         }
@@ -348,7 +327,13 @@ namespace Sistema_funerario_mascotas.Views.Clients
         public int id { get; set; }
         public string nombre { get; set; }
         public string apellidos { get; set; }
-        public string celular { get; set; }
+        public string fecha_nacimiento { get; set; }
+        public string calle { get; set; }
+        public string entre_calles { get; set; }
+        public int colonia_id { get; set; }
+        public string ciudad { get; set; }
+        public string referencia_domicilio { get; set; }
         public string telefono { get; set; }
+        public string celular { get; set; }
     }
 }
