@@ -1,7 +1,9 @@
 ﻿using Sistema_funerario_mascotas.Views;
 using Sistema_funerario_mascotas.Views.Clients;
+using Sistema_funerario_mascotas.Views.Users;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -14,7 +16,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.IO;
 
 namespace Sistema_funerario_mascotas.Views.Clients
 {
@@ -34,7 +35,7 @@ namespace Sistema_funerario_mascotas.Views.Clients
 
         private void IrAgregarCliente_Click(object sender, RoutedEventArgs e)
         {
-            // IrAgregarUsuario_Click(sender, e);
+            this.NavigationService.Navigate(new CrearClientePage());
         }
 
         private void IrEditarCliente_Click(object sender, RoutedEventArgs e)
