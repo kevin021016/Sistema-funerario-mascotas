@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sistema_funerario_mascotas"
         xmlns:clients="clr-namespace:Sistema_funerario_mascotas.Views.Clients"
+        xmlns:contracts="clr-namespace:Sistema_funerario_mascotas.Views.Contratos"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
         Title="Sistema Funerario" Height="450" Width="800"
@@ -18,7 +19,7 @@
                 <ui:NavigationViewItem x:Name="MenuDashboard" Content="Dashboard" Icon="{ui:SymbolIcon Home24}" TargetPageType="{x:Type local:DashboardPage}"/>
                 <ui:NavigationViewItem Content="Usuarios" Icon="{ui:SymbolIcon Person24}" TargetPageType="{x:Type local:UsuariosPage}" />
                 <ui:NavigationViewItem Content="Clientes" Icon="{ui:SymbolIcon People24}" TargetPageType="{x:Type clients:ClientesPage}" />
-                <ui:NavigationViewItem Content="Contratos" Icon="{ui:SymbolIcon DocumentTable24}"/>
+                <ui:NavigationViewItem Content="Contratos" Icon="{ui:SymbolIcon DocumentTable24}" TargetPageType="{x:Type contracts:ContratosPage}" />
                 <ui:NavigationViewItem Content="Inventario" Icon="{ui:SymbolIcon Box24}"/>                  
                 <ui:NavigationViewItem Content="Reportes" Icon="{ui:SymbolIcon ChartMultiple24}"/>
             </ui:NavigationView.MenuItems>
