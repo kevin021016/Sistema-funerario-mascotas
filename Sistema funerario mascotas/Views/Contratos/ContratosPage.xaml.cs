@@ -24,8 +24,7 @@ namespace Sistema_funerario_mascotas.Views.Contratos
 
         private void IrAgregarContrato_Click(object sender, RoutedEventArgs e)
         {
-            // Cambia por tu vista de creación de contratos correspondiente
-            // this.NavigationService.Navigate(new CrearContratoPage());
+            this.NavigationService.Navigate(new CrearContratoPage());
         }
 
         private void IrEditarContrato_Click(object sender, RoutedEventArgs e)
