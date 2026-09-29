@@ -31,7 +31,8 @@ namespace Sistema_funerario_mascotas.Views.Contratos
         {
             if (sender is Button button && button.DataContext is ContratoModel contratoSeleccionado)
             {
-                // this.NavigationService.Navigate(new EditarContratoPage(contratoSeleccionado));
+                // Pasamos solo el id al page de edición; la página consultará la API para cargar datos completos
+                this.NavigationService.Navigate(new EditarContratoPage(contratoSeleccionado.id));
             }
         }
 
