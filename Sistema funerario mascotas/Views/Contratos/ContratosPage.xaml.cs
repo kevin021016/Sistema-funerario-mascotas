@@ -40,7 +40,7 @@ namespace Sistema_funerario_mascotas.Views.Contratos
         {
             if (sender is Button button && button.DataContext is ContratoModel contratoSeleccionado)
             {
-                // Lógica de navegación a detalles o pagos del contrato
+                this.NavigationService.Navigate(new DetallesContratoPage(contratoSeleccionado.id));
             }
         }
 
