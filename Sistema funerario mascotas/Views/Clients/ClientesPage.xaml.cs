@@ -45,7 +45,11 @@ namespace Sistema_funerario_mascotas.Views.Clients
 
         private void IrDetallesCliente_Click(object sender, RoutedEventArgs e)
         {
-            // Lógica para detalles si se requiere
+            if (sender is Button button && button.DataContext is ClienteModel clienteSeleccionado)
+            {
+                this.NavigationService.Navigate(new DetallesClientePage(clienteSeleccionado.id));
+            }
+
         }
 
         private async void CargarClientesPagina(int pagina)
