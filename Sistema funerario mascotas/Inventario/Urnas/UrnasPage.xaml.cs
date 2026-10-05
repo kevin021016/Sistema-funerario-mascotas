@@ -92,7 +92,7 @@ namespace Sistema_funerario_mascotas.Views.Inventario.Urnas
         {
             if (sender is Button btn && btn.DataContext is UrnaModel urna)
             {
-                // this.NavigationService.Navigate(new DetallesUrnaPage(urna.id));
+                this.NavigationService.Navigate(new DetallesUrnaPage(urna.id));
             }
         }
 

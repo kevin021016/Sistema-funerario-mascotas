@@ -39,7 +39,22 @@ namespace Sistema_funerario_mascotas.Views.Inventario.Urnas
                 {
                     var json = await response.Content.ReadAsStringAsync();
                     var opciones = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                    var urna = JsonSerializer.Deserialize<UrnaModel>(json, opciones);
+
+                    // Intentamos deserializar como respuesta completa (por si viene de detalles) o directamente como UrnaModel
+                    UrnaModel urna = null;
+                    try
+                    {
+                        var wrapper = JsonSerializer.Deserialize<UrnaDetalleCompletaResponseForEdit>(json, opciones);
+                        if (wrapper != null && wrapper.urna != null)
+                        {
+                            urna = wrapper.urna;
+                        }
+                    }
+                    catch
+                    {
+                        // Si falla, intentamos deserializar directamente como UrnaModel (por si se usa en otro flujo)
+                        urna = JsonSerializer.Deserialize<UrnaModel>(json, opciones);
+                    }
 
                     if (urna != null)
                     {
@@ -54,7 +69,7 @@ namespace Sistema_funerario_mascotas.Views.Inventario.Urnas
 
                         if (!string.IsNullOrEmpty(urna.imagen_url))
                         {
-                            ImgPreview.Source = new BitmapImage(new Uri(urna.imagen_url));
+                            try { ImgPreview.Source = new BitmapImage(new Uri(urna.imagen_url)); } catch { }
                         }
                     }
                 }
@@ -67,6 +82,12 @@ namespace Sistema_funerario_mascotas.Views.Inventario.Urnas
                 PanelLoader.Visibility = Visibility.Collapsed;
                 MessageBox.Show($"Error al cargar la urna: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        // Clase de apoyo local para mapear la respuesta envuelta
+        private class UrnaDetalleCompletaResponseForEdit
+        {
+            public UrnaModel urna { get; set; }
         }
 
         private void BtnSeleccionarImagen_Click(object sender, RoutedEventArgs e)
