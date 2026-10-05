@@ -75,207 +75,310 @@
                 </StackPanel>
 
                 <!-- CONTENIDO PRINCIPAL (Oculto hasta cargar) -->
-                <Grid x:Name="GridContenidoPrincipal" Grid.Row="2" Visibility="Collapsed">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="380"/>
-                    </Grid.ColumnDefinitions>
+                <StackPanel x:Name="GridContenidoPrincipal" Grid.Row="2" Visibility="Collapsed">
 
-                    <!-- COLUMNA IZQUIERDA: Información detallada -->
-                    <StackPanel Grid.Column="0" Margin="0,0,20,20">
+                    <!-- GRID DE DOS COLUMNAS SUPERIOR -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="380"/>
+                        </Grid.ColumnDefinitions>
 
-                        <!-- 1. Información General y Cliente -->
-                        <TextBlock Text="1. Información del Cliente y Mascota" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
-                        <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,20">
-                            <StackPanel>
-                                <Grid Margin="0,0,0,15">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0">
-                                        <TextBlock Text="Cliente Titular" Opacity="0.7" FontSize="12"/>
-                                        <TextBlock x:Name="LblClienteNombre" Text="-" FontWeight="SemiBold" FontSize="15" Margin="0,2,0,0"/>
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="1">
-                                        <TextBlock Text="Teléfono / Celular" Opacity="0.7" FontSize="12"/>
-                                        <TextBlock x:Name="LblClienteTelefono" Text="-" FontWeight="SemiBold" FontSize="15" Margin="0,2,0,0"/>
-                                    </StackPanel>
-                                </Grid>
+                        <!-- COLUMNA IZQUIERDA: Información detallada -->
+                        <StackPanel Grid.Column="0" Margin="0,0,20,20">
 
-                                <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,0,0,15"/>
-
-                                <Grid Margin="0,0,0,10">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0">
-                                        <TextBlock Text="Mascota" Opacity="0.7" FontSize="12"/>
-                                        <TextBlock x:Name="LblMascotaNombre" Text="-" FontWeight="SemiBold" FontSize="14" Margin="0,2,0,0"/>
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="1">
-                                        <TextBlock Text="Tipo / Especie" Opacity="0.7" FontSize="12"/>
-                                        <TextBlock x:Name="LblMascotaTipo" Text="-" FontWeight="SemiBold" FontSize="14" Margin="0,2,0,0"/>
-                                    </StackPanel>
-                                </Grid>
-
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0">
-                                        <TextBlock Text="Peso" Opacity="0.7" FontSize="12"/>
-                                        <TextBlock x:Name="LblMascotaPeso" Text="No especificado" FontWeight="SemiBold" FontSize="14" Margin="0,2,0,0"/>
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="1">
-                                        <TextBlock Text="Edad" Opacity="0.7" FontSize="12"/>
-                                        <TextBlock x:Name="LblMascotaEdad" Text="No especificada" FontWeight="SemiBold" FontSize="14" Margin="0,2,0,0"/>
-                                    </StackPanel>
-                                </Grid>
-                            </StackPanel>
-                        </Border>
-
-                        <!-- 2. Paquete y Urna -->
-                        <TextBlock Text="2. Paquete y Urna Asignada" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
-                        <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,20">
-                            <StackPanel>
-                                <Grid Margin="0,0,0,15">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0">
-                                        <TextBlock Text="Paquete Funerario" Opacity="0.7" FontSize="12"/>
-                                        <TextBlock x:Name="LblPaqueteNombre" Text="-" FontWeight="SemiBold" FontSize="15" Margin="0,2,0,0"/>
-                                    </StackPanel>
-                                    <TextBlock Grid.Column="1" x:Name="LblPaquetePrecio" Text="$0.00" FontWeight="Bold" FontSize="16" VerticalAlignment="Bottom"/>
-                                </Grid>
-
-                                <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,0,0,15"/>
-
+                            <!-- 1. Información General y Cliente -->
+                            <TextBlock Text="1. Información del Cliente y Mascota" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                            <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,20">
                                 <StackPanel>
-                                    <TextBlock Text="Urna Funeraria" Opacity="0.7" FontSize="12"/>
-                                    <TextBlock x:Name="LblUrnaNombre" Text="Ninguna asignada" FontWeight="SemiBold" FontSize="14" Margin="0,2,0,0"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Border>
+                                    <Grid Margin="0,0,0,15">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="Cliente Titular" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock x:Name="LblClienteNombre" Text="-" FontWeight="SemiBold" FontSize="15" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="Teléfono / Celular" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock x:Name="LblClienteTelefono" Text="-" FontWeight="SemiBold" FontSize="15" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </Grid>
 
-                        <!-- 3. Servicios Extras -->
-                        <TextBlock Text="3. Servicios Extras Contratados" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
-                        <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,20">
-                            <StackPanel>
-                                <ItemsControl x:Name="IcServiciosExtrasDetalle">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid Margin="0,4">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Text="{Binding nombre}" VerticalAlignment="Center"/>
-                                                <TextBlock Text="{Binding precio_aplicado_formato}" Grid.Column="1" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                                <TextBlock x:Name="LblSinExtras" Text="No se agregaron servicios extras." Opacity="0.6" FontStyle="Italic" Visibility="Collapsed"/>
-                            </StackPanel>
-                        </Border>
+                                    <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,0,0,15"/>
 
-                        <!-- 4. Información de Pago y Fechas -->
-                        <TextBlock Text="4. Esquema Financiero y Fechas" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
-                        <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20">
-                            <StackPanel>
-                                <Grid Margin="0,0,0,12">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0">
-                                        <TextBlock Text="Tipo de Pago" Opacity="0.7" FontSize="12"/>
-                                        <TextBlock x:Name="LblTipoPago" Text="-" FontWeight="SemiBold" FontSize="14"/>
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="1">
-                                        <TextBlock Text="Método / Modalidad" Opacity="0.7" FontSize="12"/>
-                                        <TextBlock x:Name="LblMetodoModalidad" Text="-" FontWeight="SemiBold" FontSize="14"/>
-                                    </StackPanel>
-                                </Grid>
+                                    <Grid Margin="0,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="Mascota" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock x:Name="LblMascotaNombre" Text="-" FontWeight="SemiBold" FontSize="14" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="Tipo / Especie" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock x:Name="LblMascotaTipo" Text="-" FontWeight="SemiBold" FontSize="14" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </Grid>
 
-                                <Grid Margin="0,0,0,12">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0">
-                                        <TextBlock Text="Fecha de Venta" Opacity="0.7" FontSize="12"/>
-                                        <TextBlock x:Name="LblFechaVenta" Text="-" FontWeight="SemiBold" FontSize="14"/>
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="1">
-                                        <TextBlock Text="Fecha Primer Pago" Opacity="0.7" FontSize="12"/>
-                                        <TextBlock x:Name="LblFechaPrimerPago" Text="-" FontWeight="SemiBold" FontSize="14"/>
-                                    </StackPanel>
-                                </Grid>
-
-                                <StackPanel x:Name="PanelInfoCredito" Visibility="Collapsed">
-                                    <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,8,0,12"/>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0">
-                                            <TextBlock Text="Frecuencia" Opacity="0.7" FontSize="12"/>
-                                            <TextBlock x:Name="LblFrecuencia" Text="-" FontWeight="SemiBold" FontSize="14"/>
+                                            <TextBlock Text="Peso" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock x:Name="LblMascotaPeso" Text="No especificado" FontWeight="SemiBold" FontSize="14" Margin="0,2,0,0"/>
                                         </StackPanel>
                                         <StackPanel Grid.Column="1">
-                                            <TextBlock Text="Monto por Cuota" Opacity="0.7" FontSize="12"/>
-                                            <TextBlock x:Name="LblMontoPorCuota" Text="$0.00" FontWeight="SemiBold" FontSize="14"/>
+                                            <TextBlock Text="Edad" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock x:Name="LblMascotaEdad" Text="No especificada" FontWeight="SemiBold" FontSize="14" Margin="0,2,0,0"/>
                                         </StackPanel>
                                     </Grid>
                                 </StackPanel>
+                            </Border>
+
+                            <!-- 2. Paquete y Urna -->
+                            <TextBlock Text="2. Paquete y Urna Asignada" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                            <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,20">
+                                <StackPanel>
+                                    <Grid Margin="0,0,0,15">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="Paquete Funerario" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock x:Name="LblPaqueteNombre" Text="-" FontWeight="SemiBold" FontSize="15" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="1" x:Name="LblPaquetePrecio" Text="$0.00" FontWeight="Bold" FontSize="16" VerticalAlignment="Bottom"/>
+                                    </Grid>
+
+                                    <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,0,0,15"/>
+
+                                    <StackPanel>
+                                        <TextBlock Text="Urna Funeraria" Opacity="0.7" FontSize="12"/>
+                                        <TextBlock x:Name="LblUrnaNombre" Text="Ninguna asignada" FontWeight="SemiBold" FontSize="14" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- 3. Servicios Extras -->
+                            <TextBlock Text="3. Servicios Extras Contratados" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                            <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,20">
+                                <StackPanel>
+                                    <ItemsControl x:Name="IcServiciosExtrasDetalle">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0,4">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{Binding nombre}" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding precio_aplicado_formato}" Grid.Column="1" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <TextBlock x:Name="LblSinExtras" Text="No se agregaron servicios extras." Opacity="0.6" FontStyle="Italic" Visibility="Collapsed"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- 4. Información de Pago y Fechas -->
+                            <TextBlock Text="4. Esquema Financiero y Fechas" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                            <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20">
+                                <StackPanel>
+                                    <Grid Margin="0,0,0,12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="Tipo de Pago" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock x:Name="LblTipoPago" Text="-" FontWeight="SemiBold" FontSize="14"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="Método / Modalidad" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock x:Name="LblMetodoModalidad" Text="-" FontWeight="SemiBold" FontSize="14"/>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Grid Margin="0,0,0,12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="Fecha de Venta" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock x:Name="LblFechaVenta" Text="-" FontWeight="SemiBold" FontSize="14"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="Fecha Primer Pago" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock x:Name="LblFechaPrimerPago" Text="-" FontWeight="SemiBold" FontSize="14"/>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <StackPanel x:Name="PanelInfoCredito" Visibility="Collapsed">
+                                        <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,8,0,12"/>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock Text="Frecuencia" Opacity="0.7" FontSize="12"/>
+                                                <TextBlock x:Name="LblFrecuencia" Text="-" FontWeight="SemiBold" FontSize="14"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="Monto por Cuota" Opacity="0.7" FontSize="12"/>
+                                                <TextBlock x:Name="LblMontoPorCuota" Text="$0.00" FontWeight="SemiBold" FontSize="14"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                        <!-- COLUMNA DERECHA: Resumen Financiero -->
+                        <Border Grid.Column="1" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20" VerticalAlignment="Top">
+                            <StackPanel>
+                                <TextBlock Text="Resumen de Cuenta" FontSize="18" FontWeight="Bold" Margin="0,0,0,15"/>
+                                <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,0,0,15"/>
+
+                                <Grid Margin="0,5">
+                                    <TextBlock Text="Subtotal Paquete:" Opacity="0.8"/>
+                                    <TextBlock x:Name="LblSubtotalPaquete" Text="$0.00" HorizontalAlignment="Right" FontWeight="SemiBold"/>
+                                </Grid>
+                                <Grid Margin="0,5">
+                                    <TextBlock Text="Servicios Extras:" Opacity="0.8"/>
+                                    <TextBlock x:Name="LblServiciosExtras" Text="$0.00" HorizontalAlignment="Right" FontWeight="SemiBold"/>
+                                </Grid>
+
+                                <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,15"/>
+
+                                <Grid Margin="0,5">
+                                    <TextBlock Text="Monto Total Final:" FontSize="14" FontWeight="Bold"/>
+                                    <TextBlock x:Name="LblMontoFinal" Text="$0.00" FontSize="16" FontWeight="Bold" Foreground="#0EA5E9" HorizontalAlignment="Right"/>
+                                </Grid>
+                                <Grid Margin="0,5">
+                                    <TextBlock Text="Enganche Abonado:" Opacity="0.8"/>
+                                    <TextBlock x:Name="LblResumenEnganche" Text="$0.00" HorizontalAlignment="Right" FontWeight="SemiBold"/>
+                                </Grid>
+                                <Grid Margin="0,5">
+                                    <TextBlock Text="Saldo Pendiente:" FontSize="13" FontWeight="SemiBold"/>
+                                    <TextBlock x:Name="LblMontoRestante" Text="$0.00" FontSize="14" FontWeight="SemiBold" Foreground="#EF4444" HorizontalAlignment="Right"/>
+                                </Grid>
+
+                                <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,20"/>
+
+                                <ui:Button Content="Editar Contrato" Appearance="Secondary" HorizontalAlignment="Stretch" Height="40" Margin="0,0,0,10" Click="BtnEditar_Click"/>
+                                <ui:Button Content="Volver a la Lista" Appearance="Primary" HorizontalAlignment="Stretch" Height="40" Click="BtnVolver_Click"/>
                             </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!-- SECCIÓN INFERIOR: Historial de Pagos y Abonos -->
+                    <StackPanel Margin="0,30,0,0">
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="5. Historial de Pagos y Abonos" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            <ui:Button Grid.Column="1" Content="+ Registrar Abono / Pago" Appearance="Primary" Height="32" Click="BtnRegistrarPago_Click"/>
+                        </Grid>
+
+                        <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Cabecera de la tabla de pagos -->
+                                <Grid Grid.Row="0" Margin="0,0,0,12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="130"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="120"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="TIPO" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
+                                    <TextBlock Grid.Column="1" Text="MONTO" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
+                                    <TextBlock Grid.Column="2" Text="MÉTODO" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
+                                    <TextBlock Grid.Column="3" Text="REFERENCIA" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
+                                    <TextBlock Grid.Column="4" Text="FECHA" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
+                                    <TextBlock Grid.Column="5" Text="ACCIONES" FontWeight="Bold" FontSize="11" Opacity="0.6" HorizontalAlignment="Center"/>
+                                </Grid>
+
+                                <Rectangle Grid.Row="1" Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,0,0,10"/>
+
+                                <!-- Lista de Pagos -->
+                                <ItemsControl Grid.Row="2" x:Name="IcPagosContrato">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <Grid Margin="0,8,0,8" VerticalAlignment="Center">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="100"/>
+                                                        <ColumnDefinition Width="120"/>
+                                                        <ColumnDefinition Width="130"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="100"/>
+                                                        <ColumnDefinition Width="120"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <!-- Tipo de Pago -->
+                                                    <TextBlock Grid.Column="0" Text="{Binding tipo_pago}" FontWeight="SemiBold" VerticalAlignment="Center" Foreground="#0EA5E9"/>
+
+                                                    <!-- Monto -->
+                                                    <TextBlock Grid.Column="1" Text="{Binding monto_formato}" FontWeight="SemiBold" VerticalAlignment="Center" Foreground="#10B981"/>
+
+                                                    <!-- Método de Pago -->
+                                                    <TextBlock Grid.Column="2" Text="{Binding metodo_pago}" VerticalAlignment="Center" Opacity="0.9"/>
+
+                                                    <!-- Referencia -->
+                                                    <TextBlock Grid.Column="3" Text="{Binding referencia}" VerticalAlignment="Center" Opacity="0.8" TextTrimming="CharacterEllipsis" Margin="0,0,10,0"/>
+
+                                                    <!-- Fecha -->
+                                                    <TextBlock Grid.Column="4" Text="{Binding fecha_pago}" VerticalAlignment="Center" Opacity="0.8" FontSize="12"/>
+
+                                                    <!-- Botones de Acción (Ver Observaciones y Borrar) -->
+                                                    <StackPanel Grid.Column="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                        <!-- Ver Observaciones -->
+                                                        <Button Width="32" Height="32" Margin="2" Padding="0" Background="#3B82F6" BorderBrush="{x:Null}" 
+                                                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Ver observaciones" 
+                                                                Click="VerObservacionesPago_Click" CommandParameter="{Binding}">
+                                                            <ui:SymbolIcon Symbol="DocumentText24" FontSize="14" Foreground="White"/>
+                                                        </Button>
+
+                                                        <!-- Borrar Pago -->
+                                                        <Button Width="32" Height="32" Margin="2" Padding="0" Background="#EF4444" BorderBrush="{x:Null}" 
+                                                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Eliminar pago" 
+                                                                Click="EliminarPago_Click" CommandParameter="{Binding id}">
+                                                            <ui:SymbolIcon Symbol="Delete24" FontSize="14" Foreground="White"/>
+                                                        </Button>
+                                                    </StackPanel>
+                                                </Grid>
+                                                <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,4" Opacity="0.4"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <!-- Mensaje si no hay pagos -->
+                                <TextBlock x:Name="LblSinPagos" Text="No hay pagos o abonos registrados para este contrato." Opacity="0.6" FontStyle="Italic" Visibility="Collapsed" Margin="0,15" HorizontalAlignment="Center"/>
+                            </Grid>
                         </Border>
                     </StackPanel>
 
-                    <!-- COLUMNA DERECHA: Resumen Financiero -->
-                    <Border Grid.Column="1" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20" VerticalAlignment="Top">
-                        <StackPanel>
-                            <TextBlock Text="Resumen de Cuenta" FontSize="18" FontWeight="Bold" Margin="0,0,0,15"/>
-                            <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,0,0,15"/>
-
-                            <Grid Margin="0,5">
-                                <TextBlock Text="Subtotal Paquete:" Opacity="0.8"/>
-                                <TextBlock x:Name="LblSubtotalPaquete" Text="$0.00" HorizontalAlignment="Right" FontWeight="SemiBold"/>
-                            </Grid>
-                            <Grid Margin="0,5">
-                                <TextBlock Text="Servicios Extras:" Opacity="0.8"/>
-                                <TextBlock x:Name="LblServiciosExtras" Text="$0.00" HorizontalAlignment="Right" FontWeight="SemiBold"/>
-                            </Grid>
-
-                            <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,15"/>
-
-                            <Grid Margin="0,5">
-                                <TextBlock Text="Monto Total Final:" FontSize="14" FontWeight="Bold"/>
-                                <TextBlock x:Name="LblMontoFinal" Text="$0.00" FontSize="16" FontWeight="Bold" Foreground="#0EA5E9" HorizontalAlignment="Right"/>
-                            </Grid>
-                            <Grid Margin="0,5">
-                                <TextBlock Text="Enganche Abonado:" Opacity="0.8"/>
-                                <TextBlock x:Name="LblResumenEnganche" Text="$0.00" HorizontalAlignment="Right" FontWeight="SemiBold"/>
-                            </Grid>
-                            <Grid Margin="0,5">
-                                <TextBlock Text="Saldo Pendiente:" FontSize="13" FontWeight="SemiBold"/>
-                                <TextBlock x:Name="LblMontoRestante" Text="$0.00" FontSize="14" FontWeight="SemiBold" Foreground="#EF4444" HorizontalAlignment="Right"/>
-                            </Grid>
-
-                            <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,20"/>
-
-                            <ui:Button Content="Editar Contrato" Appearance="Secondary" HorizontalAlignment="Stretch" Height="40" Margin="0,0,0,10" Click="BtnEditar_Click"/>
-                            <ui:Button Content="Volver a la Lista" Appearance="Primary" HorizontalAlignment="Stretch" Height="40" Click="BtnVolver_Click"/>
-                        </StackPanel>
-                    </Border>
-                </Grid>
+                </StackPanel>
 
                 <ui:SnackbarPresenter x:Name="SnackbarHost" Grid.Row="0" Grid.RowSpan="3"/>
             </Grid>
