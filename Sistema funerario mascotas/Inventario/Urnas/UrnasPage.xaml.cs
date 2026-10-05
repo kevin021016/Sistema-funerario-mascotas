@@ -26,6 +26,10 @@ namespace Sistema_funerario_mascotas.Views.Inventario.Urnas
         {
             try
             {
+                // Mostramos el loader y ocultamos la lista mientras responde Railway
+                PanelLoader.Visibility = Visibility.Visible;
+                IcUrnas.Visibility = Visibility.Collapsed;
+
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", SessionManager.AuthToken);
@@ -41,7 +45,6 @@ namespace Sistema_funerario_mascotas.Views.Inventario.Urnas
                 {
                     var json = await response.Content.ReadAsStringAsync();
 
-                    // Configuramos el deserializador para que acepte números enviados como strings
                     var opciones = new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true,
@@ -65,6 +68,12 @@ namespace Sistema_funerario_mascotas.Views.Inventario.Urnas
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al cargar urnas: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                // Ocultamos el loader y restauramos la visibilidad de la lista
+                PanelLoader.Visibility = Visibility.Collapsed;
+                IcUrnas.Visibility = Visibility.Visible;
             }
         }
 

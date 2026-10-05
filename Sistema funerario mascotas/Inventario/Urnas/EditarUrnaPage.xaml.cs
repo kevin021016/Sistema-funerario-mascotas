@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -38,9 +39,14 @@ namespace Sistema_funerario_mascotas.Views.Inventario.Urnas
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var opciones = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
-                    // Intentamos deserializar como respuesta completa (por si viene de detalles) o directamente como UrnaModel
+                    // Configuramos el lector para aceptar números como strings
+                    var opciones = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true,
+                        NumberHandling = JsonNumberHandling.AllowReadingFromString
+                    };
+
                     UrnaModel urna = null;
                     try
                     {
@@ -52,7 +58,6 @@ namespace Sistema_funerario_mascotas.Views.Inventario.Urnas
                     }
                     catch
                     {
-                        // Si falla, intentamos deserializar directamente como UrnaModel (por si se usa en otro flujo)
                         urna = JsonSerializer.Deserialize<UrnaModel>(json, opciones);
                     }
 
@@ -84,7 +89,6 @@ namespace Sistema_funerario_mascotas.Views.Inventario.Urnas
             }
         }
 
-        // Clase de apoyo local para mapear la respuesta envuelta
         private class UrnaDetalleCompletaResponseForEdit
         {
             public UrnaModel urna { get; set; }
@@ -163,7 +167,6 @@ namespace Sistema_funerario_mascotas.Views.Inventario.Urnas
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", SessionManager.AuthToken);
 
-                // Laravel requiere _method = PUT al enviar MultipartFormDataContent en actualizaciones
                 var formData = new MultipartFormDataContent();
                 formData.Add(new StringContent("PUT"), "_method");
                 formData.Add(new StringContent(TxtCodigo.Text.Trim()), "codigo");

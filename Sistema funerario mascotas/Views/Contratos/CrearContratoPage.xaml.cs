@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -85,7 +86,12 @@ namespace Sistema_funerario_mascotas.Views.Contratos
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", SessionManager.AuthToken);
 
-                var opciones = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                // Configuramos las opciones para permitir leer números desde cadenas de texto (Railway / Producción)
+                var opciones = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                    NumberHandling = JsonNumberHandling.AllowReadingFromString
+                };
 
                 // 1. Clientes con opción por defecto
                 var resClientes = await client.GetAsync($"{ApiConfig.BaseUrl}clients/all");
@@ -111,7 +117,7 @@ namespace Sistema_funerario_mascotas.Views.Contratos
                     CbPaquetes.SelectedIndex = 0;
                 }
 
-                // 3. Urnas con opción por defecto (Opcional, pero se añade por consistencia)
+                // 3. Urnas con opción por defecto
                 var resUrnas = await client.GetAsync($"{ApiConfig.BaseUrl}urnas");
                 if (resUrnas.IsSuccessStatusCode)
                 {
@@ -274,7 +280,6 @@ namespace Sistema_funerario_mascotas.Views.Contratos
 
                 bool hayErrores = false;
 
-                // Validación de cliente seleccionado (id == 0 es la opción por defecto)
                 if (CbClientes.SelectedValue == null || (int)CbClientes.SelectedValue == 0)
                 {
                     TxtErrorCliente.Visibility = Visibility.Visible;
@@ -293,7 +298,6 @@ namespace Sistema_funerario_mascotas.Views.Contratos
                     hayErrores = true;
                 }
 
-                // Validación de paquete seleccionado (id == 0 es la opción por defecto)
                 if (CbPaquetes.SelectedValue == null || (int)CbPaquetes.SelectedValue == 0)
                 {
                     TxtErrorPaquete.Visibility = Visibility.Visible;
@@ -383,7 +387,8 @@ namespace Sistema_funerario_mascotas.Views.Contratos
                 }
                 else
                 {
-                    MostrarSnackbar("Error", "No se pudo registrar el contrato.", false);
+                    var errContent = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"No se pudo registrar el contrato: {errContent}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)

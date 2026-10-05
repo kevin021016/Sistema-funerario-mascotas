@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -76,7 +77,6 @@ namespace Sistema_funerario_mascotas.Views.Contratos
         {
             try
             {
-                // Mostrar loader y ocultar formulario
                 PanelLoader.Visibility = Visibility.Visible;
                 GridContenidoPrincipal.Visibility = Visibility.Collapsed;
 
@@ -84,7 +84,12 @@ namespace Sistema_funerario_mascotas.Views.Contratos
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", SessionManager.AuthToken);
 
-                var opciones = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                // Configuramos las opciones para permitir leer números desde cadenas de texto (Railway / Producción)
+                var opciones = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                    NumberHandling = JsonNumberHandling.AllowReadingFromString
+                };
 
                 // 1. Cargar Clientes
                 var resClientes = await client.GetAsync($"{ApiConfig.BaseUrl}clients/all");
@@ -221,7 +226,6 @@ namespace Sistema_funerario_mascotas.Views.Contratos
                     }
                 }
 
-                // Ocultar loader y mostrar formulario con datos cargados
                 PanelLoader.Visibility = Visibility.Collapsed;
                 GridContenidoPrincipal.Visibility = Visibility.Visible;
             }
@@ -429,7 +433,7 @@ namespace Sistema_funerario_mascotas.Views.Contratos
                     mascota_nombre = TxtMascotaNombre.Text.Trim(),
                     mascota_tipo = TxtMascotaTipo.Text.Trim(),
                     mascota_peso = string.IsNullOrWhiteSpace(TxtMascotaPeso.Text) ? null : TxtMascotaPeso.Text.Trim(),
-                    mascota_edad = string.IsNullOrWhiteSpace(TxtMascotaEdad.Text) ? null : TxtMascotaEdad_TextTrim(TxtMascotaEdad.Text),
+                    mascota_edad = string.IsNullOrWhiteSpace(TxtMascotaEdad.Text) ? null : TxtMascotaEdad.Text.Trim(),
                     precio_paquete_aplicado = precioPaquete,
                     precio_servicios_aplicado = totalExtras,
                     monto_final = precioPaquete + totalExtras,
@@ -467,7 +471,8 @@ namespace Sistema_funerario_mascotas.Views.Contratos
                 }
                 else
                 {
-                    MostrarSnackbar("Error", "No se pudo actualizar el contrato.", false);
+                    var errContent = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"No se pudo actualizar el contrato: {errContent}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
@@ -475,8 +480,6 @@ namespace Sistema_funerario_mascotas.Views.Contratos
                 MessageBox.Show($"Error de conexión: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        private string TxtMascotaEdad_TextTrim(string text) => text.Trim();
 
         private void BreadcrumbContratos_Click(object sender, MouseButtonEventArgs e)
         {

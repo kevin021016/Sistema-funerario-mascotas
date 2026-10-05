@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -34,7 +35,14 @@ namespace Sistema_funerario_mascotas.Views.Contratos
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var opciones = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                    // Configuramos el lector para aceptar números enviados como strings desde Railway
+                    var opciones = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true,
+                        NumberHandling = JsonNumberHandling.AllowReadingFromString
+                    };
+
                     var contrato = JsonSerializer.Deserialize<ContratoDetalleModel>(json, opciones);
 
                     if (contrato != null)

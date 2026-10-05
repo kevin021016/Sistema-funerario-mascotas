@@ -5,6 +5,7 @@ using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -31,7 +32,6 @@ namespace Sistema_funerario_mascotas.Views.Contratos
         {
             if (sender is Button button && button.DataContext is ContratoModel contratoSeleccionado)
             {
-                // Pasamos solo el id al page de edición; la página consultará la API para cargar datos completos
                 this.NavigationService.Navigate(new EditarContratoPage(contratoSeleccionado.id));
             }
         }
@@ -62,7 +62,13 @@ namespace Sistema_funerario_mascotas.Views.Contratos
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonString = await response.Content.ReadAsStringAsync();
-                    var opciones = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                    // Configuramos el lector para aceptar números como strings enviados por Railway
+                    var opciones = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true,
+                        NumberHandling = JsonNumberHandling.AllowReadingFromString
+                    };
 
                     var paginatedResponse = JsonSerializer.Deserialize<PaginatedContratosResponse>(jsonString, opciones);
 
@@ -290,7 +296,12 @@ namespace Sistema_funerario_mascotas.Views.Contratos
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var lista = JsonSerializer.Deserialize<List<ContratoModel>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    var opciones = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true,
+                        NumberHandling = JsonNumberHandling.AllowReadingFromString
+                    };
+                    var lista = JsonSerializer.Deserialize<List<ContratoModel>>(json, opciones);
                     if (lista != null && lista.Count > 0) return lista;
                 }
             }

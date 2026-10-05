@@ -1,7 +1,9 @@
 ﻿using Sistema_funerario_mascotas.Views.Inventario.Urnas;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -35,9 +37,14 @@ namespace Sistema_funerario_mascotas.Views.Inventario.Urnas
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var opciones = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
-                    // Deserializamos el objeto que contiene la urna y el historial
+                    // Configuramos el lector para aceptar números como strings
+                    var opciones = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true,
+                        NumberHandling = JsonNumberHandling.AllowReadingFromString
+                    };
+
                     var resultado = JsonSerializer.Deserialize<UrnaDetalleCompletaResponse>(json, opciones);
 
                     if (resultado != null && resultado.urna != null)
@@ -63,7 +70,6 @@ namespace Sistema_funerario_mascotas.Views.Inventario.Urnas
                             try { ImgUrnaDetalle.Source = new BitmapImage(new Uri(urna.imagen_url)); } catch { }
                         }
 
-                        // Poblar historial de movimientos
                         if (resultado.historial != null && resultado.historial.Count > 0)
                         {
                             IcHistorialUrna.ItemsSource = resultado.historial;
