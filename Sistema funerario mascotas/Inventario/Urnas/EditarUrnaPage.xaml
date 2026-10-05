@@ -1,0 +1,163 @@
+﻿<Page x:Class="Sistema_funerario_mascotas.Views.Inventario.Urnas.EditarUrnaPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.openxmlformats.org/expression/blend/2008" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d" 
+      Title="EditarUrnaPage"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+
+    <ui:ListView x:Name="LvScrollContainer"
+                 Background="Transparent"
+                 BorderThickness="0"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+        <ui:ListView.ItemContainerStyle>
+            <Style TargetType="{x:Type ui:ListViewItem}">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="IsHitTestVisible" Value="True"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ui:ListViewItem}">
+                            <Border Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                                <ContentPresenter/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ui:ListView.ItemContainerStyle>
+
+        <ui:ListViewItem>
+            <Grid Margin="30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Migas de pan -->
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+                    <TextBlock Text="Urnas" Opacity="0.5" Cursor="Hand" MouseLeftButtonUp="BreadcrumbUrnas_Click" FontSize="12"/>
+                    <TextBlock Text=" > " Opacity="0.5" FontSize="12" Margin="5,0"/>
+                    <TextBlock Text="Editar Urna" FontSize="12" FontWeight="SemiBold"/>
+                </StackPanel>
+
+                <!-- Título -->
+                <TextBlock Grid.Row="1" x:Name="TxtTituloUrna" Text="Editar Urna" FontSize="26" FontWeight="Bold" Margin="0,0,0,20"/>
+
+                <!-- LOADER DE CARGA -->
+                <StackPanel x:Name="PanelLoader" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,60,0,0">
+                    <ui:ProgressRing Width="60" Height="60" IsIndeterminate="True" Foreground="#0EA5E9"/>
+                    <TextBlock Text="Cargando información de la urna..." HorizontalAlignment="Center" Margin="0,15,0,0" Opacity="0.7" FontSize="14"/>
+                </StackPanel>
+
+                <!-- Contenido principal a dos columnas (Oculto hasta cargar) -->
+                <Grid x:Name="GridContenidoPrincipal" Grid.Row="2" Visibility="Collapsed">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="380"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- COLUMNA IZQUIERDA: Formulario de Edición -->
+                    <StackPanel Grid.Column="0" Margin="0,0,20,20">
+
+                        <!-- Sección: Información Básica -->
+                        <TextBlock Text="1. Información de la Urna" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                        <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,20">
+                            <StackPanel>
+                                <Grid Margin="0,0,0,15">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                        <TextBlock Text="Código de Urna" FontWeight="Medium" Margin="0,0,0,5"/>
+                                        <ui:TextBox x:Name="TxtCodigo" PlaceholderText="Ej. URN-0020"/>
+                                        <TextBlock x:Name="TxtErrorCodigo" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Collapsed" Text="El código es obligatorio."/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                        <TextBlock Text="Nombre de la Urna" FontWeight="Medium" Margin="0,0,0,5"/>
+                                        <ui:TextBox x:Name="TxtNombre" PlaceholderText="Ej. Urna Nogal Clásica"/>
+                                        <TextBlock x:Name="TxtErrorNombre" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Collapsed" Text="El nombre es obligatorio."/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <TextBlock Text="Descripción" FontWeight="Medium" Margin="0,0,0,5"/>
+                                <ui:TextBox x:Name="TxtDescripcion" PlaceholderText="Detalles y materiales de la urna..." AcceptsReturn="True" Height="70"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Sección: Precios e Inventario -->
+                        <TextBlock Text="2. Costos e Inventario" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                        <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,20">
+                            <StackPanel>
+                                <Grid Margin="0,0,0,15">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                        <TextBlock Text="Precio de Compra ($)" FontWeight="Medium" Margin="0,0,0,5"/>
+                                        <ui:TextBox x:Name="TxtPrecioCompra" PlaceholderText="0.00"/>
+                                        <TextBlock x:Name="TxtErrorPrecioCompra" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Collapsed" Text="Ingrese un valor válido."/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                        <TextBlock Text="Precio de Venta ($)" FontWeight="Medium" Margin="0,0,0,5"/>
+                                        <ui:TextBox x:Name="TxtPrecioVenta" PlaceholderText="0.00"/>
+                                        <TextBlock x:Name="TxtErrorPrecioVenta" Foreground="#FF5555" FontSize="11" Margin="0,4,0,0" Visibility="Collapsed" Text="Ingrese un valor válido."/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                        <TextBlock Text="Existencias" FontWeight="Medium" Margin="0,0,0,5"/>
+                                        <ui:TextBox x:Name="TxtExistencias"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                        <TextBlock Text="Stock Mínimo Alerta" FontWeight="Medium" Margin="0,0,0,5"/>
+                                        <ui:TextBox x:Name="TxtStockMinimo"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- COLUMNA DERECHA: Imagen y Acción -->
+                    <Border Grid.Column="1" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20" VerticalAlignment="Top" Margin="0,30,0,0">
+                        <StackPanel>
+                            <TextBlock Text="Imagen de la Urna" FontSize="18" FontWeight="Bold" Margin="0,0,0,15"/>
+                            <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,0,0,15"/>
+
+                            <!-- Visor de imagen actual o seleccionada -->
+                            <Border Width="160" Height="160" CornerRadius="8" Background="#22FFFFFF" Margin="0,0,0,15" ClipToBounds="True" HorizontalAlignment="Center">
+                                <Image x:Name="ImgPreview" Source="https://via.placeholder.com/150" Stretch="UniformToFill"/>
+                            </Border>
+
+                            <ui:Button Content="Cambiar Imagen..." Appearance="Secondary" HorizontalAlignment="Stretch" Margin="0,0,0,10" Click="BtnSeleccionarImagen_Click"/>
+                            <TextBlock x:Name="TxtRutaArchivo" Text="Conservar imagen actual" FontSize="11" Opacity="0.6" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+                            <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,0,0,20"/>
+
+                            <ui:Button Content="Actualizar Urna" Appearance="Primary" HorizontalAlignment="Stretch" Height="45" Click="ActualizarUrna_Click"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <ui:SnackbarPresenter x:Name="SnackbarHost" Grid.Row="0" Grid.RowSpan="3"/>
+            </Grid>
+        </ui:ListViewItem>
+    </ui:ListView>
+</Page>
