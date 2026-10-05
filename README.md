@@ -44,14 +44,21 @@ El sistema está construido bajo una arquitectura desacoplada:
 
 > ⚠️ **Nota:** Este proyecto se encuentra en desarrollo activo para mi portafolio profesional. Las siguientes características están planificadas para las próximas iteraciones:
 
-### 1. Módulo de Paquetes (`Paquetes`)
+### 1. Módulo Dashboard (`Dashboard`)
+* **Objetivo:** Proveer una vista general analítica y de acceso rápido al estado operativo de la funeraria al iniciar la aplicación.
+* **Características proyectadas:**
+  - [ ] Diseño de la interfaz visual y estructuración del layout principal del dashboard.
+  - [ ] Consumo e integración de endpoints de la API REST para métricas en tiempo real (ingresos del mes, contratos activos, alertas de stock bajo en urnas).
+  - [ ] Widgets de accesos rápidos y gráficos estadísticos de resumen operativo.
+
+### 2. Módulo de Paquetes (`Paquetes`)
 * **Objetivo:** Administrar el catálogo general de servicios funerarios base que ofrece la empresa (cremación individual, colectiva, traslados, ceremonias).
 * **Características proyectadas:**
   - [ ] CRUD completo de paquetes funerarios y sus precios base.
   - [ ] Asociación directa de servicios extras personalizables.
   - [ ] Selectores rápidos para la creación de nuevos contratos.
 
-### 2. Módulo de Reportes e Impresión (`Reportes`)
+### 3. Módulo de Reportes e Impresión (`Reportes`)
 * **Objetivo:** Generar informes operativos, gerenciales y financieros con capacidades de exportación e impresión directa.
 * **Características clave pendientes:**
   - [ ] **Conexión directa con impresora:** Envío de reportes de cortes de caja, comprobantes de pago y tickets directamente a la impresora predeterminada sin pasar por vistas previas complejas.
