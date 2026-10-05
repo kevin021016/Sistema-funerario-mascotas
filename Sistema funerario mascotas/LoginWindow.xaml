@@ -24,7 +24,7 @@
 
                 <!-- Campo E-mail -->
                 <TextBlock Text="Correo Electrónico" Margin="0,0,0,6" FontWeight="Medium" FontSize="12"/>
-                <ui:TextBox x:Name="TxtEmail" Text="correo@gmail.com"  PlaceholderText="ejemplo@correo.com" Margin="0,0,0,12" HorizontalAlignment="Stretch"/>
+                <ui:TextBox x:Name="TxtEmail" Text="m.peralta@test.com"  PlaceholderText="ejemplo@correo.com" Margin="0,0,0,12" HorizontalAlignment="Stretch"/>
 
                 <!-- Campo Contraseña -->
                 <TextBlock Text="Contraseña" Margin="0,0,0,6" FontWeight="Medium" FontSize="12"/>

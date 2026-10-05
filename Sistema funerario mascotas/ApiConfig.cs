@@ -7,6 +7,6 @@ namespace Sistema_funerario_mascotas
     public static class ApiConfig
     {
         // Cambiar cuando suba a producción
-        public static string BaseUrl => "http://127.0.0.1:8000/api/";
+        public static string BaseUrl => "https://sistema-funerario-mascotas-api-production.up.railway.app/api/";
     }
 }

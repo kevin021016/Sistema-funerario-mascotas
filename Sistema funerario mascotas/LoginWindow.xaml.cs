@@ -43,7 +43,7 @@ namespace Sistema_funerario_mascotas
                 var loginData = new { email = email, password = password };
                 var jsonContent = new StringContent(JsonSerializer.Serialize(loginData), Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await client.PostAsync("http://127.0.0.1:8000/api/login", jsonContent);
+                HttpResponseMessage response = await client.PostAsync($"{ApiConfig.BaseUrl}login", jsonContent);
 
                 if (response.IsSuccessStatusCode)
                 {
