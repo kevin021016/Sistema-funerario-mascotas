@@ -27,7 +27,14 @@
                     </ui:NavigationViewItem.MenuItems>
                 </ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Reportes" Icon="{ui:SymbolIcon ChartMultiple24}"/>
+                
             </ui:NavigationView.MenuItems>
+            <ui:NavigationView.FooterMenuItems>
+                <ui:NavigationViewItem
+                        Content="Cerrar sesión"
+                        Icon="{ui:SymbolIcon Power24}"
+                        Click="Logout"/>
+            </ui:NavigationView.FooterMenuItems>
         </ui:NavigationView>
     </Grid>
 </Window>
