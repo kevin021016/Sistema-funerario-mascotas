@@ -110,7 +110,7 @@ namespace Sistema_funerario_mascotas.Inventario.Servicios
         {
             if (sender is Button btn && btn.DataContext is ServicioItemModel servicio)
             {
-                // this.NavigationService.Navigate(new EditarServicioPage(servicio.id));
+                this.NavigationService.Navigate(new EditarServicioPage(servicio.id));
             }
         }
 
