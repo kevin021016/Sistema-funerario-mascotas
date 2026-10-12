@@ -1,0 +1,113 @@
+﻿<Page x:Class="Sistema_funerario_mascotas.Inventario.Paquetes.EditarPaquetePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d" 
+      Title="EditarPaquetePage"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Migas de pan (Breadcrumb) -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock Text="Paquetes" Opacity="0.5" Cursor="Hand" MouseLeftButtonUp="BtnVolver_Click" FontSize="12"/>
+            <TextBlock Text=" > " Opacity="0.5" FontSize="12" Margin="5,0"/>
+            <TextBlock Text="Editar Paquete" FontSize="12" FontWeight="SemiBold"/>
+        </StackPanel>
+
+        <!-- Título y Botón Volver -->
+        <Grid Grid.Row="1" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Botón Volver -->
+            <ui:Button Grid.Column="0" Width="38" Height="38" Padding="0" Margin="0,0,15,0" 
+                       Appearance="Secondary" ToolTip="Volver a la lista" 
+                       HorizontalAlignment="Left" VerticalAlignment="Center" 
+                       Click="BtnVolver_Click">
+                <ui:SymbolIcon Symbol="ArrowLeft24" FontSize="16"/>
+            </ui:Button>
+
+            <TextBlock x:Name="TxtTituloPaquete" Grid.Column="1" Text="Editar Paquete Funerario" FontSize="26" FontWeight="Bold" VerticalAlignment="Center"/>
+        </Grid>
+
+        <!-- LOADER (Mientras carga los datos de Railway) -->
+        <StackPanel x:Name="PanelLoader" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,60,0,60" Visibility="Collapsed">
+            <ui:ProgressRing Width="50" Height="50" IsIndeterminate="True" Foreground="#0EA5E9"/>
+            <TextBlock Text="Cargando datos del paquete..." HorizontalAlignment="Center" Margin="0,10,0,0" Opacity="0.7" FontSize="13"/>
+        </StackPanel>
+
+        <!-- Contenedor del Formulario -->
+        <Border Grid.Row="2" x:Name="GridContenidoPrincipal" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="25" VerticalAlignment="Top">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Fila 0: Nombre y Precio -->
+                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,15">
+                    <TextBlock Text="Nombre del Paquete *" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <ui:TextBox x:Name="TxtNombre" PlaceholderText="Ej. Paquete Eterno, Premium..." HorizontalAlignment="Stretch" Margin="0,0,0,2"/>
+                    <TextBlock x:Name="TxtErrorNombre" Text="El nombre es obligatorio." Foreground="#EF4444" FontSize="11" Visibility="Collapsed"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="0" Grid.Column="2" Margin="0,0,0,15">
+                    <TextBlock Text="Precio ($) *" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <ui:TextBox x:Name="TxtPrecio" PlaceholderText="0.00" HorizontalAlignment="Stretch" Margin="0,0,0,2"/>
+                    <TextBlock x:Name="TxtErrorPrecio" Text="Ingrese un precio válido mayor o igual a 0." Foreground="#EF4444" FontSize="11" Visibility="Collapsed"/>
+                </StackPanel>
+
+                <!-- Fila 1: Selección de Urna (ComboBox) -->
+                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,15">
+                    <TextBlock Text="Urna Incluida (Opcional)" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <ComboBox x:Name="CbUrnas" 
+                              DisplayMemberPath="nombre_display" 
+                              SelectedValuePath="id"
+                              Height="35"
+                              Background="{DynamicResource ControlFillColorDefaultBrush}"
+                              Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                              BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+                              HorizontalAlignment="Stretch"/>
+                </StackPanel>
+
+                <!-- Fila 2: Descripción -->
+                <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,15">
+                    <TextBlock Text="Descripción" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <ui:TextBox x:Name="TxtDescripcion" PlaceholderText="Detalles y coberturas del paquete..." AcceptsReturn="True" TextWrapping="Wrap" Height="90" HorizontalAlignment="Stretch"/>
+                </StackPanel>
+
+                <!-- Fila 3: Estatus Activo -->
+                <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" x:Name="ChkActivo" Content="Paquete Activo / Disponible" IsChecked="True" FontWeight="Medium" Margin="0,5,0,25"/>
+
+                <!-- Fila 4: Botones de Acción -->
+                <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                    <ui:Button Content="Cancelar" Appearance="Secondary" Width="100" Margin="0,0,10,0" Click="BtnVolver_Click"/>
+                    <ui:Button Content="Actualizar Paquete" Appearance="Primary" Width="150" Click="ActualizarPaquete_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <ui:SnackbarPresenter x:Name="SnackbarHost" Grid.Row="0" Grid.RowSpan="5"/>
+    </Grid>
+</Page>

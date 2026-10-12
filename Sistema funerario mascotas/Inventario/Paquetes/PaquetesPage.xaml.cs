@@ -109,7 +109,7 @@ namespace Sistema_funerario_mascotas.Inventario.Paquetes
         {
             if (sender is Button btn && btn.DataContext is PaqueteItemModel paquete)
             {
-                // this.NavigationService.Navigate(new EditarPaquetePage(paquete.id));
+                this.NavigationService.Navigate(new EditarPaquetePage(paquete.id));
             }
         }
 
