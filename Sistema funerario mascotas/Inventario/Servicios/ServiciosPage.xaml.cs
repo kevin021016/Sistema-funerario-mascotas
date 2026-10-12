@@ -103,7 +103,7 @@ namespace Sistema_funerario_mascotas.Inventario.Servicios
 
         private void IrAgregarServicio_Click(object sender, RoutedEventArgs e)
         {
-            // this.NavigationService.Navigate(new CrearServicioPage());
+            this.NavigationService.Navigate(new CrearServicioPage());
         }
 
         private void IrEditarServicio_Click(object sender, RoutedEventArgs e)
