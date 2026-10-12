@@ -7,6 +7,7 @@
         xmlns:clients="clr-namespace:Sistema_funerario_mascotas.Views.Clients"
         xmlns:contracts="clr-namespace:Sistema_funerario_mascotas.Views.Contratos"
         xmlns:urnas="clr-namespace:Sistema_funerario_mascotas.Views.Inventario.Urnas"
+        xmlns:servicios="clr-namespace:Sistema_funerario_mascotas.Inventario.Servicios"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
         Title="Sistema Funerario" Height="450" Width="800"
@@ -23,7 +24,16 @@
                 <ui:NavigationViewItem Content="Contratos" Icon="{ui:SymbolIcon DocumentTable24}" TargetPageType="{x:Type contracts:ContratosPage}" />
                 <ui:NavigationViewItem Content="Inventario" Icon="{ui:SymbolIcon Box24}">                  
                     <ui:NavigationViewItem.MenuItems>
-                        <ui:NavigationViewItem Content="Urnas" Icon="{ui:SymbolIcon Box24}" TargetPageType="{x:Type urnas:UrnasPage}" />
+                        <ui:NavigationViewItem Content="Urnas" TargetPageType="{x:Type urnas:UrnasPage}">
+                            <ui:NavigationViewItem.Icon>
+                                <ui:SymbolIcon x:Name="PuntitoUrnas" Symbol="Circle16" FontSize="8"/>
+                            </ui:NavigationViewItem.Icon>
+                        </ui:NavigationViewItem>
+                        <ui:NavigationViewItem Content="Servicios" TargetPageType="{x:Type servicios:ServiciosPage}">
+                            <ui:NavigationViewItem.Icon>
+                                <ui:SymbolIcon x:Name="PuntitoServicios" Symbol="Circle16" FontSize="8"/>
+                            </ui:NavigationViewItem.Icon>
+                        </ui:NavigationViewItem>
                     </ui:NavigationViewItem.MenuItems>
                 </ui:NavigationViewItem>
                 <ui:NavigationViewItem Content="Reportes" Icon="{ui:SymbolIcon ChartMultiple24}"/>
