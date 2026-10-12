@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Sistema_funerario_mascotas"
         xmlns:clients="clr-namespace:Sistema_funerario_mascotas.Views.Clients"
         xmlns:contracts="clr-namespace:Sistema_funerario_mascotas.Views.Contratos"
+        xmlns:reportes="clr-namespace:Sistema_funerario_mascotas.Views.Reportes"
         xmlns:urnas="clr-namespace:Sistema_funerario_mascotas.Views.Inventario.Urnas"
         xmlns:servicios="clr-namespace:Sistema_funerario_mascotas.Inventario.Servicios"
         xmlns:paquetes="clr-namespace:Sistema_funerario_mascotas.Inventario.Paquetes"
@@ -42,7 +43,7 @@
                         </ui:NavigationViewItem>
                     </ui:NavigationViewItem.MenuItems>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem Content="Reportes" Icon="{ui:SymbolIcon ChartMultiple24}"/>
+                <ui:NavigationViewItem Content="Reportes" Icon="{ui:SymbolIcon ChartMultiple24}" TargetPageType="{x:Type reportes:ReportesPage}"/>
                 
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.FooterMenuItems>
