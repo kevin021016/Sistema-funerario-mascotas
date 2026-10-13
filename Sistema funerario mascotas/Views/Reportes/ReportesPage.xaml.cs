@@ -28,5 +28,10 @@ namespace Sistema_funerario_mascotas.Views.Reportes
         {
             this.NavigationService.Navigate(new ReportesUsuariosPage());
         }
+
+        private void IrReportes_Clientes(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new ReportesClientesPage());
+        }
     }
 }
