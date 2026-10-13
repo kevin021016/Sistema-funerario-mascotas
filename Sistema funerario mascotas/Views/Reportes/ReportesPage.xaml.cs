@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sistema_funerario_mascotas.Views.Clients;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +22,11 @@ namespace Sistema_funerario_mascotas.Views.Reportes
         public ReportesPage()
         {
             InitializeComponent();
+        }
+
+        private void IrReportes_Usuarios(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new ReportesUsuariosPage());
         }
     }
 }
