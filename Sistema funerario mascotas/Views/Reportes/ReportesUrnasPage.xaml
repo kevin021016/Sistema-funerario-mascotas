@@ -1,0 +1,240 @@
+﻿<Page x:Class="Sistema_funerario_mascotas.Views.Reportes.ReportesUrnasPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.openxmlformats.org/expression/blend/2008" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d" 
+      Title="ReportesUrnasPage"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+
+    <!-- ListView con un solo item usado como contenedor scrolleable (el ScrollViewer normal no responde a la rueda del mouse en esta app) -->
+    <ui:ListView x:Name="LvScrollContainer"
+                 Background="Transparent"
+                 BorderThickness="0"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+        <ui:ListView.ItemContainerStyle>
+            <Style TargetType="{x:Type ui:ListViewItem}">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="IsHitTestVisible" Value="True"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ui:ListViewItem}">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ui:ListView.ItemContainerStyle>
+
+        <ui:ListViewItem>
+            <Grid Margin="30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- 1. Migas de pan (Breadcrumb) -->
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+                    <TextBlock Text="Dashboard" Opacity="0.5" Cursor="Hand" MouseLeftButtonUp="BreadcrumbDashboard_Click" FontSize="12"/>
+                    <TextBlock Text=" > " Opacity="0.5" FontSize="12" Margin="5,0"/>
+                    <TextBlock Text="Reportes" Opacity="0.5" Cursor="Hand" MouseLeftButtonUp="BreadcrumbReportes_Click" FontSize="12"/>
+                    <TextBlock Text=" > " Opacity="0.5" FontSize="12" Margin="5,0"/>
+                    <TextBlock Text="Urnas" FontSize="12" FontWeight="SemiBold"/>
+                </StackPanel>
+
+                <!-- 2. Título y Botón Volver -->
+                <Grid Grid.Row="1" Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ui:Button Grid.Column="0" Width="38" Height="38" Padding="0" Margin="0,0,15,0" 
+                               Appearance="Secondary" ToolTip="Volver" 
+                               HorizontalAlignment="Left" VerticalAlignment="Center" 
+                               Click="BreadcrumbReportes_Click">
+                        <ui:SymbolIcon Symbol="ArrowLeft24" FontSize="16"/>
+                    </ui:Button>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="Reporte de Urnas" FontSize="26" FontWeight="Bold"/>
+                        <TextBlock Text="Existencias, inventario, precios, imágenes y fechas de registro" FontSize="13" Opacity="0.6" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- 3. Barra de Filtros -->
+                <Border Grid.Row="2" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="220"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0,0,15,0">
+                            <TextBlock Text="Buscar" FontSize="11" FontWeight="SemiBold" Opacity="0.7" Margin="0,0,0,5"/>
+                            <ui:TextBox x:Name="TxtBuscador" PlaceholderText="Nombre, código..." Icon="{ui:SymbolIcon Search24}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="0,0,15,0">
+                            <TextBlock Text="Desde" FontSize="11" FontWeight="SemiBold" Opacity="0.7" Margin="0,0,0,5"/>
+                            <ui:TextBox x:Name="TxtFechaDesde" PlaceholderText="DD/MM/AAAA"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" Margin="0,0,15,0">
+                            <TextBlock Text="Hasta" FontSize="11" FontWeight="SemiBold" Opacity="0.7" Margin="0,0,0,5"/>
+                            <ui:TextBox x:Name="TxtFechaHasta" PlaceholderText="DD/MM/AAAA"/>
+                        </StackPanel>
+
+                        <ui:Button Grid.Column="4" Content="Generar" Appearance="Primary" Width="110" VerticalAlignment="Bottom" Click="BtnGenerar_Click"/>
+                    </Grid>
+                </Border>
+
+                <!-- 4. Tarjetas de Métricas -->
+                <UniformGrid Grid.Row="3" Columns="2" Margin="0,0,0,20">
+                    <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20" Margin="0,0,10,0">
+                        <StackPanel>
+                            <TextBlock Text="Total de Modelos" FontSize="12" Opacity="0.6" Margin="0,0,0,8"/>
+                            <TextBlock x:Name="LblTotalModelos" Text="0" FontSize="24" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20" Margin="10,0,0,0">
+                        <StackPanel>
+                            <TextBlock Text="Total de Conteo (Existencias)" FontSize="12" Opacity="0.6" Margin="0,0,0,8"/>
+                            <TextBlock x:Name="LblTotalConteo" Text="0" FontSize="24" FontWeight="Bold" Foreground="#0EA5E9"/>
+                        </StackPanel>
+                    </Border>
+                </UniformGrid>
+
+                <!-- 5. Contenedor de la Tabla -->
+                <Border Grid.Row="4" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="15">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Cabecera de la Tabla (columnas proporcionales: ocupan todo el ancho) -->
+                        <Grid Grid.Row="0" Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="1.2*" MinWidth="110"/>
+                                <ColumnDefinition Width="2.5*" MinWidth="160"/>
+                                <ColumnDefinition Width="1*" MinWidth="90"/>
+                                <ColumnDefinition Width="1*" MinWidth="90"/>
+                                <ColumnDefinition Width="0.7*" MinWidth="70"/>
+                                <ColumnDefinition Width="1.2*" MinWidth="110"/>
+                                <ColumnDefinition Width="1.4*" MinWidth="130"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="IMG" FontWeight="Bold" FontSize="11" Opacity="0.6" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="CÓDIGO" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
+                            <TextBlock Grid.Column="2" Text="NOMBRE" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
+                            <TextBlock Grid.Column="3" Text="P. COMPRA" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
+                            <TextBlock Grid.Column="4" Text="P. VENTA" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
+                            <TextBlock Grid.Column="5" Text="EXIST." FontWeight="Bold" FontSize="11" Opacity="0.6"/>
+                            <TextBlock Grid.Column="6" Text="CREACIÓN" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
+                            <TextBlock Grid.Column="7" Text="MODIFICACIÓN" FontWeight="Bold" FontSize="11" Opacity="0.6"/>
+                        </Grid>
+
+                        <Rectangle Grid.Row="1" Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,0,0,10"/>
+
+                        <!-- LOADER -->
+                        <StackPanel x:Name="PanelLoader" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,40,0,40" Visibility="Collapsed">
+                            <ui:ProgressRing Width="40" Height="40" IsIndeterminate="True" Foreground="#0EA5E9"/>
+                            <TextBlock Text="Cargando urnas..." HorizontalAlignment="Center" Margin="0,10,0,0" Opacity="0.7" FontSize="12"/>
+                        </StackPanel>
+
+                        <!-- Lista de Urnas. Sin scroll propio: la página entera hace scroll -->
+                        <ui:ListView Grid.Row="2" x:Name="IcUrnasReporte"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                     ScrollViewer.VerticalScrollBarVisibility="Disabled">
+
+                            <ui:ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ui:ListViewItem}">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="Focusable" Value="False"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                </Style>
+                            </ui:ListView.ItemContainerStyle>
+
+                            <ui:ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <Grid Margin="0,8,0,8" VerticalAlignment="Center">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="70"/>
+                                                <ColumnDefinition Width="1.2*" MinWidth="110"/>
+                                                <ColumnDefinition Width="2.5*" MinWidth="160"/>
+                                                <ColumnDefinition Width="1*" MinWidth="90"/>
+                                                <ColumnDefinition Width="1*" MinWidth="90"/>
+                                                <ColumnDefinition Width="0.7*" MinWidth="70"/>
+                                                <ColumnDefinition Width="1.2*" MinWidth="110"/>
+                                                <ColumnDefinition Width="1.4*" MinWidth="130"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Imagen miniatura -->
+                                            <Border Grid.Column="0" Width="40" Height="40" CornerRadius="6" Background="{DynamicResource ControlFillColorSecondaryBrush}" HorizontalAlignment="Left">
+                                                <Image Source="{Binding imagen_url}" Stretch="UniformToFill"/>
+                                            </Border>
+
+                                            <!-- Código -->
+                                            <TextBlock Grid.Column="1" Text="{Binding codigo}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+
+                                            <!-- Nombre -->
+                                            <TextBlock Grid.Column="2" Text="{Binding nombre}" FontWeight="Medium" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,0"/>
+
+                                            <!-- Precio Compra -->
+                                            <TextBlock Grid.Column="3" Text="{Binding precio_compra_formato}" VerticalAlignment="Center" Opacity="0.9"/>
+
+                                            <!-- Precio Venta -->
+                                            <TextBlock Grid.Column="4" Text="{Binding precio_venta_formato}" FontWeight="Medium" Foreground="#0EA5E9" VerticalAlignment="Center"/>
+
+                                            <!-- Existencias -->
+                                            <TextBlock Grid.Column="5" Text="{Binding existencias}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+
+                                            <!-- Fecha Creación -->
+                                            <TextBlock Grid.Column="6" Text="{Binding fecha_creacion_formato}" FontSize="11" Opacity="0.8" VerticalAlignment="Center"/>
+
+                                            <!-- Fecha Modificación -->
+                                            <TextBlock Grid.Column="7" Text="{Binding fecha_modificacion_formato}" FontSize="11" Opacity="0.8" VerticalAlignment="Center"/>
+                                        </Grid>
+                                        <Rectangle Height="1" Fill="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,5"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ui:ListView.ItemTemplate>
+                        </ui:ListView>
+                    </Grid>
+                </Border>
+
+                <!-- 6. Botones de Exportar al final -->
+                <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+                    <ui:Button Content="Exportar CSV" Margin="5,0,5,0" Appearance="Secondary"/>
+                    <ui:Button Content="Exportar a Excel" Margin="5,0,5,0" Appearance="Secondary"/>
+                    <ui:Button Content="Imprimir PDF" Margin="5,0,0,0" Appearance="Primary"/>
+                </StackPanel>
+            </Grid>
+        </ui:ListViewItem>
+    </ui:ListView>
+</Page>
