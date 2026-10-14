@@ -175,10 +175,22 @@
                                 <TextBlock Grid.Row="1" Text="Contratos por periodo, estatus y cliente." FontSize="13" Opacity="0.6" Margin="0,0,0,15" TextWrapping="Wrap"/>
 
                                 <Grid Grid.Row="2">
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                        <TextBlock Text="Generar reporte" FontSize="13" FontWeight="Medium" Foreground="#0EA5E9" Margin="0,0,6,0"/>
-                                        <ui:SymbolIcon Symbol="ChevronRight16" FontSize="12" Foreground="#0EA5E9" VerticalAlignment="Center"/>
-                                    </StackPanel>
+                                    <ui:Button Appearance="Transparent"
+                 HorizontalAlignment="Right"
+                 Padding="6,2"
+                 Click="IrReportes_Contratos">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Generar reporte"
+                         FontSize="13"
+                         FontWeight="Medium"
+                         Foreground="#0EA5E9"
+                         Margin="0,0,6,0" />
+                                            <ui:SymbolIcon Symbol="ChevronRight16"
+                             FontSize="12"
+                             Foreground="#0EA5E9"
+                             VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </ui:Button>
                                 </Grid>
                             </Grid>
                         </Border>
@@ -219,7 +231,12 @@
                         </Border>
 
                         <!-- Tarjeta Servicios -->
-                        <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="10" Padding="24" MinHeight="140" Margin="4,0,4,0" Cursor="Hand">
+                        <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                                CornerRadius="10"
+                                Padding="24"
+                                MinHeight="140"
+                                Margin="4,0,4,0"
+                                Cursor="Hand">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -227,11 +244,25 @@
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
 
-                                <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
-                                    <Border Width="38" Height="38" Background="#1A0EA5E9" CornerRadius="8" Margin="0,0,12,0">
-                                        <ui:SymbolIcon Symbol="Briefcase24" FontSize="20" Foreground="#0EA5E9" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <StackPanel Orientation="Horizontal"
+                                            Grid.Row="0"
+                                            Margin="0,0,0,10">
+                                    <Border Width="38"
+                                            Height="38"
+                                            Background="#1A0EA5E9"
+                                            CornerRadius="8"
+                                            Margin="0,0,12,0">
+                                        <ui:SymbolIcon Symbol="Briefcase24"
+                                                       FontSize="20"
+                                                       Foreground="#0EA5E9"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
                                     </Border>
-                                    <TextBlock Text="Servicios" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
+
+                                    <TextBlock Text="Servicios"
+                                               FontSize="18"
+                                               FontWeight="SemiBold"
+                                               VerticalAlignment="Center"/>
                                 </StackPanel>
 
                                 <TextBlock Grid.Row="1" Text="Servicios contratados y su ingreso." FontSize="13" Opacity="0.6" Margin="0,0,0,15" TextWrapping="Wrap"/>
